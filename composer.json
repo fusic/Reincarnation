@@ -1,0 +1,39 @@
+{
+    "name": "fusic/reincarnation",
+    "description": "CakePHP Reincarnation",
+    "type": "cakephp-plugin",
+    "keywords": ["cakephp", "soft delete"],
+    "homepage": "https://github.com/fusic/reincarnation",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fusic",
+            "role": "Author"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/fusic/reincarnation"
+    },
+    "require": {
+        "cakephp/cakephp": "~3.0"
+    },
+    "require-dev": {
+        "cakephp/cakephp-codesniffer": "dev-master",
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Reincarnation\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Reincarnation\\Test\\": "tests",
+            "Reincarnation\\Test\\App\\": "tests/test_app/App"
+        }
+    },
+    "suggest": {
+    },
+    "extra": {
+    }
+}
