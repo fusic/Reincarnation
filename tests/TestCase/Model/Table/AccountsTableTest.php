@@ -30,13 +30,13 @@ class AccountsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-		$this->connection = ConnectionManager::get('test');
-		$this->Accounts = new AccountsTable([
-			'alias' => 'Accounts',
-			'table' => 'accounts',
-			'connection' => $this->connection
-		]);
-		
+        $this->connection = ConnectionManager::get('test');
+        $this->Accounts = new AccountsTable([
+            'alias' => 'Accounts',
+            'table' => 'accounts',
+            'connection' => $this->connection
+        ]);
+        
         //fixtureManagerを呼び出し、fixtureを実行する
         $this->fixtureManager = new FixtureManager();
         $this->fixtureManager->fixturize($this);

@@ -1,30 +1,30 @@
 <?php
 
 function find_root() {
-	$root = dirname(__DIR__);
-	if (is_dir($root . '/vendor/cakephp/cakephp')) {
-		return $root;
-	}
+    $root = dirname(__DIR__);
+    if (is_dir($root . '/vendor/cakephp/cakephp')) {
+        return $root;
+    }
 
-	$root = dirname(dirname(__DIR__));
-	if (is_dir($root . '/vendor/cakephp/cakephp')) {
-		return $root;
-	}
+    $root = dirname(dirname(__DIR__));
+    if (is_dir($root . '/vendor/cakephp/cakephp')) {
+        return $root;
+    }
 
-	$root = dirname(dirname(dirname(__DIR__)));
-	if (is_dir($root . '/vendor/cakephp/cakephp')) {
-		return $root;
-	}
+    $root = dirname(dirname(dirname(__DIR__)));
+    if (is_dir($root . '/vendor/cakephp/cakephp')) {
+        return $root;
+    }
 }
 
 function find_app() {
-	if (is_dir(ROOT . '/App')) {
-		return 'App';
-	}
+    if (is_dir(ROOT . '/App')) {
+        return 'App';
+    }
 
-	if (is_dir(ROOT . '/vendor/cakephp/app/App')) {
-		return 'vendor/cakephp/app/App';
-	}
+    if (is_dir(ROOT . '/vendor/cakephp/app/App')) {
+        return 'vendor/cakephp/app/App';
+    }
 }
 
 if (!defined('DS')){
@@ -56,40 +56,40 @@ $Tmp->create(TMP . 'cache/persistent', 0777);
 $Tmp->create(TMP . 'cache/views', 0777);
 
 $cache = [
-	'default' => [
-		'engine' => 'File',
-		'path' => CACHE
-	],
-	'_cake_core_' => [
-		'className' => 'File',
-		'prefix' => 'search_myapp_cake_core_',
-		'path' => CACHE . 'persistent/',
-		'serialize' => true,
-		'duration' => '+10 seconds'
-	],
-	'_cake_model_' => [
-		'className' => 'File',
-		'prefix' => 'search_my_app_cake_model_',
-		'path' => CACHE . 'models/',
-		'serialize' => 'File',
-		'duration' => '+10 seconds'
-	]
+    'default' => [
+        'engine' => 'File',
+        'path' => CACHE
+    ],
+    '_cake_core_' => [
+        'className' => 'File',
+        'prefix' => 'search_myapp_cake_core_',
+        'path' => CACHE . 'persistent/',
+        'serialize' => true,
+        'duration' => '+10 seconds'
+    ],
+    '_cake_model_' => [
+        'className' => 'File',
+        'prefix' => 'search_my_app_cake_model_',
+        'path' => CACHE . 'models/',
+        'serialize' => 'File',
+        'duration' => '+10 seconds'
+    ]
 ];
 
 Cake\Cache\Cache::config($cache);
 
 // Ensure default test connection is defined
 if (!getenv('db_class')) {
-	putenv('db_class=Cake\Database\Driver\Postgres');
-	putenv('db_dsn=sqlite::memory:');
+    putenv('db_class=Cake\Database\Driver\Postgres');
+    putenv('db_dsn=sqlite::memory:');
 }
 
 Cake\Datasource\ConnectionManager::config('test', [
-	'className' => 'Cake\Database\Connection',
-	'driver' => 'Cake\Database\Driver\Postgres',
-	//'dsn' => getenv('db_dsn'),
-	'database' => 'cake_test_db',
-	'username' => 'postgres',
-	'password' => '',
-	'timezone' => 'UTC'
+    'className' => 'Cake\Database\Connection',
+    'driver' => 'Cake\Database\Driver\Postgres',
+    //'dsn' => getenv('db_dsn'),
+    'database' => 'cake_test_db',
+    'username' => 'postgres',
+    'password' => '',
+    'timezone' => 'UTC'
 ]);
