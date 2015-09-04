@@ -3,7 +3,7 @@
     "description": "CakePHP Reincarnation",
     "type": "cakephp-plugin",
     "keywords": ["cakephp", "soft delete"],
-    "homepage": "https://github.com/fusic/reincarnation",
+    "homepage": "https://github.com/fusic/Reincarnation",
     "license": "MIT",
     "authors": [
         {
@@ -12,7 +12,7 @@
         }
     ],
     "support": {
-        "source": "https://github.com/fusic/reincarnation"
+        "source": "https://github.com/fusic/Reincarnation"
     },
     "require": {
         "cakephp/cakephp": "~3.0"
