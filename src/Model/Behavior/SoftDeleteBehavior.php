@@ -22,30 +22,31 @@ class SoftDeleteBehavior extends Behavior {
         }
     }
 
-    public function softDelete($entity){
+    public function softDelete($deleteEntity){
         //データがぞんざいしない場合はエラー
-        if (!$this->dataExist($entity->id)){
+        if (!$this->dataExist($deleteEntity->{$this->_table->primaryKey()})){
             return false;
         }
 
-        $id = $entity->{$this->_table->primaryKey()};
+        $id = $deleteEntity->{$this->_table->primaryKey()};
 
         $now = Time::now()->i18nFormat('YYYY/MM/dd HH:mm:ss');
         $delete_data = [
-            $this->_table->primaryKey() => $id,
             'deleted' => true,
             'deleted_date' => $now
         ];
-        $entity = $this->_table->newEntity(
+        $saveEntity = $this->_table->newEntity(
             $delete_data,
             //バリデーションはかけない
             ['validate' => false]
         );
+        $saveEntity->{$this->_table->primaryKey()} = $id;
+
         $behavior = $this;
 
-        $result = $this->_table->connection()->transactional(function () use ($behavior, $entity, $id) {
+        $result = $this->_table->connection()->transactional(function () use ($behavior, $saveEntity, $id) {
             //削除データの保存に失敗
-            if (!$behavior->_table->save($entity,['atomic' => false])){
+            if (!$behavior->_table->save($saveEntity,['atomic' => false])){
                 return false;
             }
             //最終的に存在していなければOK
