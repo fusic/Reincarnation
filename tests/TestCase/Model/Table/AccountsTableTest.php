@@ -36,12 +36,12 @@ class AccountsTableTest extends TestCase
             'table' => 'accounts',
             'connection' => $this->connection
         ]);
-        
+
         //fixtureManagerを呼び出し、fixtureを実行する
         $this->fixtureManager = new FixtureManager();
         $this->fixtureManager->fixturize($this);
         $this->fixtureManager->loadSingle('Accounts');
-        
+
     }
 
     /**
@@ -68,20 +68,20 @@ class AccountsTableTest extends TestCase
             ->where(['Accounts.id' => 1])
             ->first();
         $this->assertTrue(!empty($account_info));
-        
+
         //ID2はfind不可
         $account_info = $this->Accounts->find('all')
             ->where(['Accounts.id' => 2])
             ->first();
         $this->assertFalse(!empty($account_info));
-        
+
         //削除済みのデータをfindする
         $account_info = $this->Accounts->find('all',['enableSoftDelete' => false])
             ->where(['Accounts.id' => 1])
             ->first();
         $this->assertTrue(!empty($account_info));
     }
-    
+
 
     /**
      * Test initialize method
@@ -97,22 +97,22 @@ class AccountsTableTest extends TestCase
         $entity = $this->Accounts->newEntity($data);
         $save_result = $this->Accounts->save($entity);
         $this->assertTrue((bool) $save_result);
-        
+
         $last_id = $save_result->id;
         $account_info = $this->Accounts->find('all')
             ->where(['Accounts.id' => $last_id])
             ->first();
         $this->assertTrue(!empty($account_info));
-        
+
         //削除する
-        $this->assertTrue($this->Accounts->softDelete($last_id));
-        
+        $this->assertTrue($this->Accounts->softDelete($account_info));
+
         //削除したデータは見つからない
         $account_info = $this->Accounts->find('all')
             ->where(['Accounts.id' => $last_id])
             ->first();
         $this->assertFalse(!empty($account_info));
     }
-    
+
 
 }

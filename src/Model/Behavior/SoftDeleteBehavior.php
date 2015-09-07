@@ -21,26 +21,28 @@ class SoftDeleteBehavior extends Behavior {
             $query->where([$modelName . '.deleted' => false]);
         }
     }
-    
-    public function softDelete($id){
+
+    public function softDelete($entity){
         //データがぞんざいしない場合はエラー
-        if (!$this->dataExist($id)){
+        if (!$this->dataExist($entity->id)){
             return false;
         }
-        
+
+        $id = $entity->{$this->_table->primaryKey()};
+
         $now = Time::now()->i18nFormat('YYYY/MM/dd HH:mm:ss');
         $delete_data = [
-            'id' => $id,
+            $this->_table->primaryKey() => $id,
             'deleted' => true,
             'deleted_date' => $now
         ];
         $entity = $this->_table->newEntity(
-            $delete_data, 
+            $delete_data,
             //バリデーションはかけない
             ['validate' => false]
         );
         $behavior = $this;
-        
+
         $result = $this->_table->connection()->transactional(function () use ($behavior, $entity, $id) {
             //削除データの保存に失敗
             if (!$behavior->_table->save($entity,['atomic' => false])){
@@ -52,18 +54,18 @@ class SoftDeleteBehavior extends Behavior {
             }
             return true;
         });
-        
+
         return $result;
     }
-    
+
     private function dataExist($id){
         //数値などのチェック
         if (!$id || !Validation::naturalNumber($id)){
             return false;
         }
-        
+
         $data = $this->_table->find()
-        ->where(['id' => $id])
+        ->where([$this->_table->alias() . '.' . $this->_table->primaryKey() => $id])
         ->first();
         ;
         return !empty($data);
