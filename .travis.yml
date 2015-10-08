@@ -12,9 +12,6 @@ sudo: false
 addons:
   postgresql: "9.3"
 
-before_script:
-  - psql -c 'create database cake_test_db;' -U postgres
-
 env:
   global:
     - DEFAULT=1
@@ -30,6 +27,7 @@ install:
 
 before_script:
   - cp phpunit.xml.dist phpunit.xml
+  - psql -c 'create database cake_test_db;' -U postgres
 
 script:
   - sh -c "if [ '$DEFAULT' = '1' ]; then phpunit --stderr; fi"
