@@ -29,7 +29,7 @@ install:
 
 before_script:
   - cp phpunit.xml.dist phpunit.xml
-  - cp tests/createdb.sh.{$DB} tests/createdb.sh
+  - cp tests/createdb.sh.${DB} tests/createdb.sh
   - sh tests/createdb.sh
 
 script:
