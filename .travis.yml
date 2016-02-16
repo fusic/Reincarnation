@@ -15,6 +15,7 @@ addons:
 env:
   global:
     - DEFAULT=1
+  matrix:
     - DB=mysql
     - DB=postgresql
 
