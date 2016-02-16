@@ -55,7 +55,6 @@ class AccountsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['department_id'], 'Departments'));
         return $rules;
     }
 }
