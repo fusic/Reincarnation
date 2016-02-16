@@ -10,8 +10,13 @@ sudo: false
 
 addons:
   postgresql: "9.3"
+  mysql: "5.6"
 
 env:
+  - DB=mysql
+  global:
+    - DEFAULT=1
+  - DB=postgresql
   global:
     - DEFAULT=1
 
@@ -26,7 +31,8 @@ install:
 
 before_script:
   - cp phpunit.xml.dist phpunit.xml
-  - psql -c 'create database cake_test_db;' -U postgres
+  - cp tests/createdb.sh.{$DB} tests/createdb.sh
+  - sh tests/createdb.sh
 
 script:
   - sh -c "if [ '$DEFAULT' = '1' ]; then phpunit --stderr; fi"
