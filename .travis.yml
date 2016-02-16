@@ -13,12 +13,10 @@ addons:
   mysql: "5.6"
 
 env:
-  - DB=mysql
   global:
     - DEFAULT=1
-  - DB=postgresql
-  global:
-    - DEFAULT=1
+    - DB=mysql
+    - DB=postgresql
 
 matrix:
   fast_finish: true
