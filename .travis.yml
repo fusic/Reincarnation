@@ -16,8 +16,8 @@ env:
   global:
     - DEFAULT=1
   matrix:
-    - DB=mysql
-    - DB=postgresql
+    - TESTDB=mysql
+    - TESTDB=postgresql
 
 matrix:
   fast_finish: true
@@ -30,8 +30,9 @@ install:
 
 before_script:
   - cp phpunit.xml.dist phpunit.xml
-  - cp tests/createdb.sh.${DB} tests/createdb.sh
+  - cp tests/createdb.sh.${TESTDB} tests/createdb.sh
   - sh tests/createdb.sh
+  - export TESTDB=${TESTDB}
 
 script:
   - sh -c "if [ '$DEFAULT' = '1' ]; then phpunit --stderr; fi"

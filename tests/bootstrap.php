@@ -81,7 +81,7 @@ Cake\Cache\Cache::config($cache);
 // Ensure default test connection is defined
 
 //travis対応
-if (!getenv('DB') || getenv('DB') == 'postgres'){
+if (!getenv('TESTDB') || getenv('TESTDB') == 'postgresql'){
     if (!getenv('db_class')) {
         putenv('db_class=Cake\Database\Driver\Postgres');
         putenv('db_dsn=sqlite::memory:');
