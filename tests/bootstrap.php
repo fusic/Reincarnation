@@ -79,17 +79,37 @@ $cache = [
 Cake\Cache\Cache::config($cache);
 
 // Ensure default test connection is defined
-if (!getenv('db_class')) {
-    putenv('db_class=Cake\Database\Driver\Postgres');
-    putenv('db_dsn=sqlite::memory:');
-}
 
-Cake\Datasource\ConnectionManager::config('test', [
-    'className' => 'Cake\Database\Connection',
-    'driver' => 'Cake\Database\Driver\Postgres',
-    //'dsn' => getenv('db_dsn'),
-    'database' => 'cake_test_db',
-    'username' => 'postgres',
-    'password' => '',
-    'timezone' => 'UTC'
-]);
+//travis対応
+if (!getenv('DB') || getenv('DB') == 'postgres'){
+    if (!getenv('db_class')) {
+        putenv('db_class=Cake\Database\Driver\Postgres');
+        putenv('db_dsn=sqlite::memory:');
+    }
+
+    Cake\Datasource\ConnectionManager::config('test', [
+        'className' => 'Cake\Database\Connection',
+        'driver' => 'Cake\Database\Driver\Postgres',
+        //'dsn' => getenv('db_dsn'),
+        'database' => 'cake_test_db',
+        'username' => 'postgres',
+        'password' => '',
+        'timezone' => 'UTC'
+    ]);
+} else {
+    if (!getenv('db_class')) {
+        putenv('db_class=Cake\Database\Driver\Mysql');
+        putenv('db_dsn=sqlite::memory:');
+    }
+
+    Cake\Datasource\ConnectionManager::config('test', [
+        'className' => 'Cake\Database\Connection',
+        'driver' => 'Cake\Database\Driver\Mysql',
+        //'dsn' => getenv('db_dsn'),
+        'database' => 'cake_test_db',
+        'username' => 'root',
+        'password' => '',
+        'timezone' => 'UTC'
+    ]);
+
+}
