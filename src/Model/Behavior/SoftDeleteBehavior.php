@@ -18,7 +18,11 @@ class SoftDeleteBehavior extends Behavior {
             $getOptions['enableSoftDelete'] == false
         ){
             $modelName = $this->_table->alias();
-            $query->where([$modelName . '.deleted' => false]);
+            if (!empty($this->_config['boolean'])){
+                $query->where([$modelName . '.' . $this->_config['boolean'] => false]);
+            } else {
+                $query->where([$modelName . '.deleted' => false]);
+            }
         }
     }
 
@@ -31,10 +35,19 @@ class SoftDeleteBehavior extends Behavior {
         $id = $deleteEntity->{$this->_table->primaryKey()};
 
         $now = Time::now()->i18nFormat('YYYY/MM/dd HH:mm:ss');
-        $delete_data = [
-            'deleted' => true,
-            'deleted_date' => $now
-        ];
+
+        $delete_data = [];
+        if (!empty($this->_config['boolean'])){
+            $delete_data[$this->_config['boolean']] = true;
+        } else {
+            $delete_data['deleted'] = true;
+        }
+        if (!empty($this->_config['datetime'])){
+            $delete_data[$this->_config['datetime']] = $now;
+        } else {
+            $delete_data['deleted_date'] = $now;
+        }
+
         $saveEntity = $this->_table->newEntity(
             $delete_data,
             //バリデーションはかけない
