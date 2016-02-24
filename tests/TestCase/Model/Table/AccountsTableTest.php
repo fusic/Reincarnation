@@ -77,7 +77,7 @@ class AccountsTableTest extends TestCase
 
         //削除済みのデータをfindする
         $account_info = $this->Accounts->find('all',['enableSoftDelete' => false])
-            ->where(['Accounts.id' => 1])
+            ->where(['Accounts.id' => 2])
             ->first();
         $this->assertTrue(!empty($account_info));
     }

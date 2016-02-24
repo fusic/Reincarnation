@@ -15,7 +15,7 @@ class SoftDeleteBehavior extends Behavior {
         $getOptions = $query->getOptions();
         if (
             !array_key_exists('enableSoftDelete',$getOptions) ||
-            $getOptions['enableSoftDelete'] == false
+            $getOptions['enableSoftDelete'] == true
         ){
             $modelName = $this->_table->alias();
             $query->where([$modelName . '.deleted' => false]);
