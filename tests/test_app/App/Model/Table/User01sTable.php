@@ -7,9 +7,9 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Users Model
+ * User01s Model
  */
-class UsersTable extends Table
+class User01sTable extends Table
 {
 
     /**
@@ -20,12 +20,13 @@ class UsersTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('users');
+        $this->table('user01s');
         $this->displayField('name');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
 
-        $this->addBehavior('Reincarnation.SoftDelete', ['boolean' => 'delete_flg', 'datetime' => 'deleted']);
+        // 両方使用
+        $this->addBehavior('Reincarnation.SoftDelete', ['boolean' => 'delete_flg', 'timestamp' => 'deleted']);
     }
 
     /**

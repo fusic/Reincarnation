@@ -4,10 +4,10 @@ namespace Reincarnation\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * UsersFixture
+ * User02sFixture
  *
  */
-class UsersFixture extends TestFixture
+class User02sFixture extends TestFixture
 {
 
     /**
@@ -20,7 +20,7 @@ class UsersFixture extends TestFixture
         'id' => ['type' => 'integer', 'length' => 10, 'autoIncrement' => true, 'default' => null, 'null' => false, 'comment' => 'id', 'precision' => null, 'unsigned' => null],
         'name' => ['type' => 'text', 'length' => null, 'default' => null, 'null' => true, 'comment' => 'name', 'precision' => null],
         'delete_flg' => ['type' => 'boolean', 'length' => null, 'default' => 0, 'null' => false, 'comment' => 'delete_flg', 'precision' => null],
-        'deleted' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => 'deleted', 'precision' => null],
+        // 'deleted' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => 'deleted', 'precision' => null],
         'created' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => 'created', 'precision' => null],
         'modified' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => 'modified', 'precision' => null],
         '_constraints' => [
@@ -38,14 +38,14 @@ class UsersFixture extends TestFixture
         [
             'name' => 'test',
             'delete_flg' => false,
-            'deleted' => null,
+            // 'deleted' => null,
             'created' => 1430991176,
             'modified' => 1430991176
         ],
         [
             'name' => 'test2',
-            'deleted_flg' => true,
-            'deleted' => null,
+            'delete_flg' => true,
+            // 'deleted' => null,
             'created' => 1430991176,
             'modified' => 1430991176
         ],
