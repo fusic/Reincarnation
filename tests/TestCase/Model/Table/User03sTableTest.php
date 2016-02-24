@@ -69,11 +69,11 @@ class User03sTableTest extends TestCase
             ->first();
         $this->assertTrue(!empty($user_info));
 
-        // //ID2はfind不可
-        // $user_info = $this->User03s->find('all')
-        //     ->where(['User03s.id' => 2])
-        //     ->first();
-        // $this->assertFalse(!empty($user_info));
+        //ID2はfind不可
+        $user_info = $this->User03s->find('all')
+            ->where(['User03s.id' => 2])
+            ->first();
+        $this->assertFalse(!empty($user_info));
 
         //削除済みのデータをfindする
         $user_info = $this->User03s->find('all',['enableSoftDelete' => false])
