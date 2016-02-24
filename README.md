@@ -56,14 +56,14 @@ class UsersTable extends Table
         //   table field name
         //     boolean:delete_flg
         //     timestamp:deleted
-        $this->addBehavior('Reincarnation.SoftDelete', ['boolean' => delete_flg, 'timestamp' => 'deleted']);
+        $this->addBehavior('Reincarnation.SoftDelete', ['boolean' => 'delete_flg', 'timestamp' => 'deleted']);
 
         // Case 3
         // boolean only
         //   table field name
         //     boolean:delete_flg
         //     timestamp:none
-        $this->addBehavior('Reincarnation.SoftDelete', ['boolean' => delete_flg, 'timestamp' => false]);
+        $this->addBehavior('Reincarnation.SoftDelete', ['boolean' => 'delete_flg', 'timestamp' => false]);
 
         // Case 4
         // timestamp only
