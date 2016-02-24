@@ -1,9 +1,10 @@
-# Reincarnation
+# Reincarnation:CakePHP3 Logical Delete Plugin
 
 [![Build Status](https://travis-ci.org/fusic/Reincarnation.svg?branch=master)](https://travis-ci.org/fusic/Reincarnation)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/fusic/Reincarnation/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/fusic/Reincarnation/?branch=master)
 
-CakePHP3 logical delete Plugin
+## Description
+
 
 ## Requirements
 
@@ -45,39 +46,31 @@ class UsersTable extends Table
     {
         // Case 1
         // default
+        //   table field name
+        //     boolean:deleted
+        //     timestamp:delete_date
         $this->addBehavior('Reincarnation.SoftDelete');
-        ```
-        - table field name
-          - boolean:deleted
-          - timestamp:delete_date
-        ```
 
         // Case 2
         // field name custom
+        //   table field name
+        //     boolean:delete_flg
+        //     timestamp:deleted
         $this->addBehavior('Reincarnation.SoftDelete', ['boolean' => delete_flg, 'timestamp' => 'deleted']);
-        ```
-        - table field name
-          - boolean:delete_flg
-          - timestamp:deleted
-        ```
 
         // Case 3
         // boolean only
+        //   table field name
+        //     boolean:delete_flg
+        //     timestamp:none
         $this->addBehavior('Reincarnation.SoftDelete', ['boolean' => delete_flg, 'timestamp' => false]);
-        ```
-        - table field name
-          - boolean:delete_flg
-          - timestamp:none
-        ```
 
         // Case 4
         // timestamp only
+        //   table field name
+        //     boolean:none
+        //     timestamp:deleted
         $this->addBehavior('Reincarnation.SoftDelete', ['boolean' => false, 'timestamp' => 'deleted']);
-        ```
-        - table field name
-          - boolean:none
-          - timestamp:deleted
-        ```
     }
 }
 ```
