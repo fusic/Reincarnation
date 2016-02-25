@@ -11,6 +11,12 @@ use Cake\Validation\Validation;
 
 class SoftDeleteBehavior extends Behavior {
 
+    // デフォルト設定
+    protected $_defaultConfig = [
+        'boolean' => 'deleted',
+        'timestamp' => 'deleted_date'
+    ];
+
     public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary){
         $getOptions = $query->getOptions();
         if (
@@ -18,7 +24,12 @@ class SoftDeleteBehavior extends Behavior {
             $getOptions['enableSoftDelete'] == true
         ){
             $modelName = $this->_table->alias();
-            $query->where([$modelName . '.deleted' => false]);
+            if ($this->config('boolean') !== false){
+                $query->where([$modelName . '.' . $this->_config['boolean'] => false]);
+            }
+            if ($this->_config['boolean'] === false && $this->_config['timestamp'] !== false){
+                $query->where([$modelName . '.' . $this->_config['timestamp'].' IS' => null]);
+            }
         }
     }
 
@@ -31,10 +42,14 @@ class SoftDeleteBehavior extends Behavior {
         $id = $deleteEntity->{$this->_table->primaryKey()};
 
         $now = Time::now()->i18nFormat('YYYY/MM/dd HH:mm:ss');
-        $delete_data = [
-            'deleted' => true,
-            'deleted_date' => $now
-        ];
+
+        $delete_data = [];
+        if ($this->_config['boolean'] !== false){
+            $delete_data[$this->_config['boolean']] = true;
+        }
+        if ($this->_config['timestamp'] !== false){
+            $delete_data[$this->_config['timestamp']] = $now;
+        }
         $saveEntity = $this->_table->newEntity(
             $delete_data,
             //バリデーションはかけない
