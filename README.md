@@ -5,6 +5,7 @@
 
 ## Description
 
+Soft delete plugin for CakePHP 3.x.
 
 ## Requirements
 
@@ -13,7 +14,9 @@
 
 ## Installation
 
-- $ composer install
+```
+$ composer install
+```
 
 # Usage
 
@@ -93,5 +96,4 @@ class UsersController extends AppController
     }
 }
 ```
-
 

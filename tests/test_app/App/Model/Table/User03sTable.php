@@ -8,6 +8,9 @@ use Cake\Validation\Validator;
 
 /**
  * User03s Model
+ *
+ * DBに削除フラグは無し、削除日時のみの場合のテストコード
+ *
  */
 class User03sTable extends Table
 {
