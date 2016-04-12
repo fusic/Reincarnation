@@ -50,7 +50,8 @@ class SoftDeleteBehavior extends Behavior {
         if ($this->_config['timestamp'] !== false){
             $delete_data[$this->_config['timestamp']] = $now;
         }
-        $saveEntity = $this->_table->newEntity(
+        $saveEntity = $this->_table->patchEntity(
+            $deleteEntity,
             $delete_data,
             //バリデーションはかけない
             ['validate' => false]
