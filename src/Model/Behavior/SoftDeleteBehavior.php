@@ -41,7 +41,7 @@ class SoftDeleteBehavior extends Behavior {
 
         $id = $deleteEntity->{$this->_table->primaryKey()};
 
-        $now = Time::now()->i18nFormat('YYYY/MM/dd HH:mm:ss');
+        $now = Time::now();
 
         $delete_data = [];
         if ($this->_config['boolean'] !== false){

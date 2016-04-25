@@ -112,6 +112,14 @@ class User01sTableTest extends TestCase
             ->where(['User01s.id' => $last_id])
             ->first();
         $this->assertFalse(!empty($user_info));
+        
+        //削除済みのデータをfindする
+        $delete_info = $this->User01s->find('all',['enableSoftDelete' => false])
+            ->where(['User01s.id' => $last_id])
+            ->first();
+        //削除データが問題なく入っているかの確認
+        $this->assertTrue($delete_info->delete_flg);
+        $this->assertTrue(!empty($delete_info->deleted));
     }
 
 
