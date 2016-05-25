@@ -24,11 +24,13 @@ class SoftDeleteBehavior extends Behavior {
             $getOptions['enableSoftDelete'] == true
         ){
             $modelName = $this->_table->alias();
-            if ($this->config('boolean') !== false){
-                $query->where([$modelName . '.' . $this->_config['boolean'] => false]);
+            $booleanField = $this->config('boolean');
+            $timestampField = $this->config('timestamp');
+            if ($booleanField !== false && $this->_table->hasField($booleanField)){
+                $query->where([$modelName . '.' . $booleanField => false]);
             }
-            if ($this->_config['boolean'] === false && $this->_config['timestamp'] !== false){
-                $query->where([$modelName . '.' . $this->_config['timestamp'].' IS' => null]);
+            if ($booleanField === false && $timestampField !== false && $this->_table->hasField($timestampField)){
+                $query->where([$modelName . '.' . $timestampField .' IS' => null]);
             }
         }
     }
@@ -44,11 +46,11 @@ class SoftDeleteBehavior extends Behavior {
         $now = Time::now();
 
         $delete_data = [];
-        if ($this->_config['boolean'] !== false){
-            $delete_data[$this->_config['boolean']] = true;
+        if ($this->config('boolean') !== false){
+            $delete_data[$this->config('boolean')] = true;
         }
-        if ($this->_config['timestamp'] !== false){
-            $delete_data[$this->_config['timestamp']] = $now;
+        if ($this->config('timestamp') !== false){
+            $delete_data[$this->config('timestamp')] = $now;
         }
         $saveEntity = $this->_table->patchEntity(
             $deleteEntity,
