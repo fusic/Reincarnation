@@ -17,25 +17,27 @@ class SoftDeleteBehavior extends Behavior {
         'timestamp' => 'deleted_date'
     ];
 
-    public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary){
+    public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary)
+    {
         $getOptions = $query->getOptions();
         if (
-            !array_key_exists('enableSoftDelete',$getOptions) ||
+            !array_key_exists('enableSoftDelete', $getOptions) ||
             $getOptions['enableSoftDelete'] == true
         ){
             $modelName = $this->_table->alias();
             $booleanField = $this->config('boolean');
             $timestampField = $this->config('timestamp');
-            if ($booleanField !== false && $this->_table->hasField($booleanField)){
+            if ($booleanField !== false && $this->_table->hasField($booleanField)) {
                 $query->where([$modelName . '.' . $booleanField => false]);
             }
-            if ($booleanField === false && $timestampField !== false && $this->_table->hasField($timestampField)){
+            if ($booleanField === false && $timestampField !== false && $this->_table->hasField($timestampField)) {
                 $query->where([$modelName . '.' . $timestampField .' IS' => null]);
             }
         }
     }
 
-    public function softDelete($deleteEntity){
+    public function softDelete($deleteEntity)
+    {
         //データがぞんざいしない場合はエラー
         if (!$this->dataExist($deleteEntity->{$this->_table->primaryKey()})){
             return false;
@@ -46,10 +48,10 @@ class SoftDeleteBehavior extends Behavior {
         $now = Time::now();
 
         $delete_data = [];
-        if ($this->config('boolean') !== false){
+        if ($this->config('boolean') !== false) {
             $delete_data[$this->config('boolean')] = true;
         }
-        if ($this->config('timestamp') !== false){
+        if ($this->config('timestamp') !== false) {
             $delete_data[$this->config('timestamp')] = $now;
         }
         $saveEntity = $this->_table->patchEntity(
@@ -62,13 +64,13 @@ class SoftDeleteBehavior extends Behavior {
 
         $behavior = $this;
 
-        $result = $this->_table->connection()->transactional(function () use ($behavior, $saveEntity, $id) {
+        $result = $this->_table->connection()->transactional(function() use ($behavior, $saveEntity, $id) {
             //削除データの保存に失敗
-            if (!$behavior->_table->save($saveEntity,['atomic' => false])){
+            if (!$behavior->_table->save($saveEntity, ['atomic' => false])) {
                 return false;
             }
             //最終的に存在していなければOK
-            if ($behavior->dataExist($id)){
+            if ($behavior->dataExist($id)) {
                 return false;
             }
             return true;
@@ -77,9 +79,10 @@ class SoftDeleteBehavior extends Behavior {
         return $result;
     }
 
-    private function dataExist($id){
+    private function dataExist($id)
+    {
         //数値などのチェック
-        if (!$id || !Validation::naturalNumber($id)){
+        if (!$id || !Validation::naturalNumber($id)) {
             return false;
         }
 
