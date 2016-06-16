@@ -29,7 +29,8 @@
     "autoload-dev": {
         "psr-4": {
             "Reincarnation\\Test\\": "tests",
-            "Reincarnation\\Test\\App\\": "tests/test_app/App"
+            "Reincarnation\\Test\\App\\": "tests/test_app/App",
+            "App\\Model\\Table\\": "tests/test_app/DummyApp/Model/Table/"
         }
     },
     "suggest": {

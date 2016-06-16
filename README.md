@@ -88,6 +88,8 @@ class UsersController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
         if ($this->Users->softDelete($user)) {
+        //第二引数がtrueの場合、Entityのassociate先もあわせて削除します
+        //if ($this->Users->softDelete($user, true)) {
             $this->Flash->success(__('The data has been deleted.'));
         } else {
             $this->Flash->error(__('The data could not be deleted. Please, try again.'));
