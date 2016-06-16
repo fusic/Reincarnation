@@ -8,6 +8,10 @@ use Cake\ORM\Query;
 use ArrayObject;
 use Cake\I18n\Time;
 use Cake\Validation\Validation;
+use Cake\ORM\TableRegistry;
+use Cake\Datasource\EntityInterface;
+
+
 
 class SoftDeleteBehavior extends Behavior {
 
@@ -17,6 +21,13 @@ class SoftDeleteBehavior extends Behavior {
         'timestamp' => 'deleted_date'
     ];
 
+    /**
+     * beforeFind
+     * @param Event $event
+     * @param Query $query
+     * @param ArrayObject $options
+     * @param $primary
+     */
     public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary)
     {
         $getOptions = $query->getOptions();
@@ -36,7 +47,12 @@ class SoftDeleteBehavior extends Behavior {
         }
     }
 
-    public function softDelete($deleteEntity)
+    /**
+     * softDelete
+     * @param Entity $deleteEntity
+     * @param Boolean $associate
+     */
+    public function softDelete($deleteEntity, $associate = false)
     {
         //データがぞんざいしない場合はエラー
         if (!$this->dataExist($deleteEntity->{$this->_table->primaryKey()})){
@@ -64,21 +80,48 @@ class SoftDeleteBehavior extends Behavior {
 
         $behavior = $this;
 
-        $result = $this->_table->connection()->transactional(function() use ($behavior, $saveEntity, $id) {
-            //削除データの保存に失敗
-            if (!$behavior->_table->save($saveEntity, ['atomic' => false])) {
-                return false;
+        $result = true;
+        //削除データの保存に失敗
+        if (!$behavior->_table->save($saveEntity, ['atomic' => false])) {
+            $result = false;
+        }
+        //最終的に存在していなければOK
+        if ($behavior->dataExist($id)) {
+            $result = false;
+        }
+
+        //リレーションを見ない設定の場合はそのまま返す
+        if (
+            $result === false ||
+            $associate === false
+        ) {
+            return $result;
+        }
+
+        //アクセス可能なプロパティを見る
+        $properties = $deleteEntity->visibleProperties();
+        foreach ($deleteEntity->visibleProperties() as $property) {
+            //該当プロパティがEntityなら
+            //hasone / belongsto /habtmの中間テーブル
+            if (!$this->propertyDelete($deleteEntity->{$property}, $associate)) {
+                $result = false;
+            } else if (is_array($deleteEntity->{$property})) {
+                //hasmany / habtm
+                foreach ($deleteEntity->{$property} as $hasmanyProperty) {
+                    if (!$this->propertyDelete($hasmanyProperty, $associate)) {
+                        $result = false;
+                    }
+                }
             }
-            //最終的に存在していなければOK
-            if ($behavior->dataExist($id)) {
-                return false;
-            }
-            return true;
-        });
+        }
 
         return $result;
     }
 
+    /**
+     * dataExist
+     * @param Integer $id
+     */
     private function dataExist($id)
     {
         //数値などのチェック
@@ -87,10 +130,32 @@ class SoftDeleteBehavior extends Behavior {
         }
 
         $data = $this->_table->find()
-        ->where([$this->_table->alias() . '.' . $this->_table->primaryKey() => $id])
-        ->first();
-        ;
+            ->where([$this->_table->alias() . '.' . $this->_table->primaryKey() => $id])
+            ->first();
         return !empty($data);
+    }
+
+    /**
+     * propertyDelete
+     * @param Entity $property
+     * @param Boolean $associate
+     */
+    private function propertyDelete($property, $associate)
+    {
+        $result = true;
+        //プロパティがEntityなら消しにかかる
+        if (
+            is_object($property) &&
+            // 該当objectがEntityかどうかチェック
+            array_key_exists('Cake\\Datasource\\EntityInterface', class_implements($property))
+        ) {
+            //該当EntityのTableを取得
+            $associateTable = TableRegistry::get($property->source());
+            if (!$associateTable->softDelete($property, $associate)) {
+                $result = false;
+            }
+        }
+        return $result;
     }
 
 }
