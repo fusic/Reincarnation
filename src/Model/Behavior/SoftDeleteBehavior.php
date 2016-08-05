@@ -8,6 +8,7 @@ use Cake\ORM\Query;
 use ArrayObject;
 use Cake\I18n\Time;
 use Cake\Validation\Validation;
+use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
 use Cake\Datasource\EntityInterface;
 
@@ -156,6 +157,45 @@ class SoftDeleteBehavior extends Behavior {
             }
         }
         return $result;
+    }
+
+    ############################################################
+    #### For Validation
+    /**
+     * strictExistIn
+     *
+     * SoftDeletableを無視した厳密な存在チェック
+     * @param $entity Entity
+     * @param Array   options
+     */
+    public function strictExistIn(Entity $entity, $options)
+    {
+        if (
+            !isset($options['sourceModel']) ||
+            !isset($options['targetField'])
+            ) {
+            return false;
+        }
+
+        $sourceModel = $options['sourceModel'];
+        $sourceTable = TableRegistry::get($sourceModel);
+
+        $targetField = $options['targetField'];
+        $conditions  = [
+            $sourceModel . '.' . $sourceTable->primaryKey() => $entity->{$targetField}
+        ];
+
+        return (bool)count(
+                    $sourceTable
+                    ->find('all', [
+                        'enableSoftDelete' => false
+                    ])
+                    ->select(['existing' => 1])
+                    ->where($conditions)
+                    ->limit(1)
+                    ->hydrate(false)
+                    ->toArray()
+                );
     }
 
 }
