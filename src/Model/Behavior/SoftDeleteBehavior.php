@@ -36,9 +36,9 @@ class SoftDeleteBehavior extends Behavior {
             !array_key_exists('enableSoftDelete', $getOptions) ||
             $getOptions['enableSoftDelete'] == true
         ){
-            $modelName = $this->_table->alias();
-            $booleanField = $this->config('boolean');
-            $timestampField = $this->config('timestamp');
+            $modelName = $this->_table->getAlias();
+            $booleanField = $this->getConfig('boolean');
+            $timestampField = $this->getConfig('timestamp');
             if ($booleanField !== false && $this->_table->hasField($booleanField)) {
                 $query->where([$modelName . '.' . $booleanField => false]);
             }
@@ -65,11 +65,11 @@ class SoftDeleteBehavior extends Behavior {
         $now = Time::now();
 
         $delete_data = [];
-        if ($this->config('boolean') !== false) {
-            $delete_data[$this->config('boolean')] = true;
+        if ($this->getConfig('boolean') !== false) {
+            $delete_data[$this->getConfig('boolean')] = true;
         }
-        if ($this->config('timestamp') !== false) {
-            $delete_data[$this->config('timestamp')] = $now;
+        if ($this->getConfig('timestamp') !== false) {
+            $delete_data[$this->getConfig('timestamp')] = $now;
         }
         $saveEntity = $this->_table->patchEntity(
             $deleteEntity,
@@ -131,7 +131,7 @@ class SoftDeleteBehavior extends Behavior {
         }
 
         $data = $this->_table->find()
-            ->where([$this->_table->alias() . '.' . $this->_table->primaryKey() => $id])
+            ->where([$this->_table->getAlias() . '.' . $this->_table->primaryKey() => $id])
             ->first();
         return !empty($data);
     }
