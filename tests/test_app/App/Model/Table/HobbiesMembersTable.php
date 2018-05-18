@@ -25,9 +25,9 @@ class HobbiesMembersTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('hobbies_members');
-        $this->displayField('id');
-        $this->primaryKey('id');
+        $this->setTable('hobbies_members');
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 

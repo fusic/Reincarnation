@@ -56,11 +56,11 @@ class SoftDeleteBehavior extends Behavior {
     public function softDelete($deleteEntity, $associate = false)
     {
         //データがぞんざいしない場合はエラー
-        if (!$this->dataExist($deleteEntity->{$this->_table->primaryKey()})){
+        if (!$this->dataExist($deleteEntity->{$this->_table->getPrimaryKey()})){
             return false;
         }
 
-        $id = $deleteEntity->{$this->_table->primaryKey()};
+        $id = $deleteEntity->{$this->_table->getPrimaryKey()};
 
         $now = Time::now();
 
@@ -77,7 +77,7 @@ class SoftDeleteBehavior extends Behavior {
             //バリデーションはかけない
             ['validate' => false]
         );
-        $saveEntity->{$this->_table->primaryKey()} = $id;
+        $saveEntity->{$this->_table->getPrimaryKey()} = $id;
 
         $behavior = $this;
 
@@ -131,7 +131,7 @@ class SoftDeleteBehavior extends Behavior {
         }
 
         $data = $this->_table->find()
-            ->where([$this->_table->getAlias() . '.' . $this->_table->primaryKey() => $id])
+            ->where([$this->_table->getAlias() . '.' . $this->_table->getPrimaryKey() => $id])
             ->first();
         return !empty($data);
     }
@@ -151,7 +151,7 @@ class SoftDeleteBehavior extends Behavior {
             array_key_exists('Cake\\Datasource\\EntityInterface', class_implements($property))
         ) {
             //該当EntityのTableを取得
-            $associateTable = TableRegistry::get($property->source());
+            $associateTable = TableRegistry::get($property->getSource());
             if (!$associateTable->softDelete($property, $associate)) {
                 $result = false;
             }

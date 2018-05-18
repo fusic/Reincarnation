@@ -20,9 +20,9 @@ class AccountsTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('accounts');
-        $this->displayField('name');
-        $this->primaryKey('id');
+        $this->setTable('accounts');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
         $this->addBehavior('Timestamp');
         
         $this->addBehavior('Reincarnation.SoftDelete');

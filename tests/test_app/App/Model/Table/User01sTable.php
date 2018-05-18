@@ -23,9 +23,9 @@ class User01sTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('user01s');
-        $this->displayField('name');
-        $this->primaryKey('id');
+        $this->setTable('user01s');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
         $this->addBehavior('Timestamp');
 
         // 両方使用

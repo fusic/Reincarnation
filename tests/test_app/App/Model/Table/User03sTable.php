@@ -23,9 +23,9 @@ class User03sTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('user03s');
-        $this->displayField('name');
-        $this->primaryKey('id');
+        $this->setTable('user03s');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
         $this->addBehavior('Timestamp');
 
         // 削除日時のみ使用
