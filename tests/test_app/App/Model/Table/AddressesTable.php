@@ -24,9 +24,9 @@ class AddressesTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('addresses');
-        $this->displayField('name');
-        $this->primaryKey('id');
+        $this->setTable('addresses');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 

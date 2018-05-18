@@ -27,9 +27,9 @@ class MembersTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('members');
-        $this->displayField('name');
-        $this->primaryKey('id');
+        $this->setTable('members');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 

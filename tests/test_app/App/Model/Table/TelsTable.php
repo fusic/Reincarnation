@@ -24,9 +24,9 @@ class TelsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('tels');
-        $this->displayField('id');
-        $this->primaryKey('id');
+        $this->setTable('tels');
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 

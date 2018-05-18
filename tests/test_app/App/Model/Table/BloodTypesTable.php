@@ -24,9 +24,9 @@ class BloodTypesTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('blood_types');
-        $this->displayField('name');
-        $this->primaryKey('id');
+        $this->setTable('blood_types');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 
