@@ -18,7 +18,6 @@ use Cake\ORM\Entity;
  */
 class Member extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *

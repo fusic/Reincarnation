@@ -12,14 +12,13 @@ use Cake\TestSuite\Fixture\FixtureManager;
  */
 class User03sTableTest extends TestCase
 {
-
     /**
      * Fixtures
      *
      * @var array
      */
     public $fixtures = [
-        'plugin.reincarnation.user03s',
+        'plugin.Reincarnation.User03s',
     ];
 
     /**
@@ -27,7 +26,7 @@ class User03sTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->connection = ConnectionManager::get('test');
@@ -41,7 +40,6 @@ class User03sTableTest extends TestCase
         $this->fixtureManager = new FixtureManager();
         $this->fixtureManager->fixturize($this);
         $this->fixtureManager->loadSingle('User03s');
-
     }
 
     /**
@@ -49,7 +47,7 @@ class User03sTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->User03s);
 
@@ -61,7 +59,7 @@ class User03sTableTest extends TestCase
      *
      * @return void
      */
-    public function test_find()
+    public function test_find(): void
     {
         //ID1はfind可能
         $user_info = $this->User03s->find('all')
@@ -82,13 +80,12 @@ class User03sTableTest extends TestCase
         $this->assertTrue(!empty($user_info));
     }
 
-
     /**
      * Test initialize method
      *
      * @return void
      */
-    public function test_save_delete()
+    public function test_save_delete(): void
     {
         //データ保存後、findでデータを閲覧可能
         $data = [
@@ -112,7 +109,7 @@ class User03sTableTest extends TestCase
             ->where(['User03s.id' => $last_id])
             ->first();
         $this->assertFalse(!empty($user_info));
-        
+
         //削除済みのデータをfindする
         $delete_info = $this->User03s->find('all',['enableSoftDelete' => false])
             ->where(['User03s.id' => $last_id])
@@ -120,6 +117,4 @@ class User03sTableTest extends TestCase
         //削除データが問題なく入っているかの確認
         $this->assertTrue(!empty($delete_info->deleted));
     }
-
-
 }

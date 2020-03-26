@@ -18,5 +18,4 @@ class User01 extends Entity
         'delete_flg' => true,
         'deleted' => true,
     ];
-
 }
