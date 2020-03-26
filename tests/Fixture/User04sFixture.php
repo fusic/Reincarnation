@@ -19,9 +19,9 @@ class User04sFixture extends TestFixture
         'id' => ['type' => 'integer', 'length' => 10, 'autoIncrement' => true, 'default' => null, 'null' => false, 'comment' => 'id', 'precision' => null, 'unsigned' => null],
         'name' => ['type' => 'text', 'length' => null, 'default' => null, 'null' => true, 'comment' => 'name', 'precision' => null],
         // 'delete_flg' => ['type' => 'boolean', 'length' => null, 'default' => 0, 'null' => false, 'comment' => 'delete_flg', 'precision' => null],
-        'deleted' => ['type' => 'datetime', 'length' => null, 'default' => null, 'null' => true, 'comment' => 'deleted', 'precision' => null],
-        'created' => ['type' => 'datetime', 'length' => null, 'default' => null, 'null' => true, 'comment' => 'created', 'precision' => null],
-        'modified' => ['type' => 'datetime', 'length' => null, 'default' => null, 'null' => true, 'comment' => 'modified', 'precision' => null],
+        'deleted' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => 'deleted', 'precision' => null],
+        'created' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => 'created', 'precision' => null],
+        'modified' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => 'modified', 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
