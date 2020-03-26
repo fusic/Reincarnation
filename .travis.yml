@@ -7,7 +7,7 @@ php:
 
 sudo: false
 
-addons:
+services:
   postgresql: "9.3"
   mysql: "5.6"
 
