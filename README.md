@@ -1,16 +1,16 @@
-# Reincarnation:CakePHP3 Logical Delete Plugin
+# Reincarnation:CakePHP4 Logical Delete Plugin
 
 [![Build Status](https://travis-ci.org/fusic/Reincarnation.svg?branch=master)](https://travis-ci.org/fusic/Reincarnation)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/fusic/Reincarnation/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/fusic/Reincarnation/?branch=master)
 
 ## Description
 
-Soft delete plugin for CakePHP 3.x.
+Soft delete plugin for CakePHP 4.x.
 
 ## Requirements
 
-- PHP >= 5.4.*
-- CakePHP >= 3.*
+- PHP >= 7.2.*
+- CakePHP >= 4.*
 
 ## Installation
 

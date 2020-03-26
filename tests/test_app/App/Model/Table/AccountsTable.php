@@ -11,20 +11,19 @@ use Cake\Validation\Validator;
  */
 class AccountsTable extends Table
 {
-
     /**
      * Initialize method
      *
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('accounts');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
         $this->addBehavior('Timestamp');
-        
+
         $this->addBehavior('Reincarnation.SoftDelete');
     }
 
@@ -34,14 +33,14 @@ class AccountsTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
-            
+            ->allowEmptyString('id', 'create');
+
         $validator
-            ->allowEmpty('name');
+            ->allowEmptyString('name');
 
         return $validator;
     }
@@ -53,7 +52,7 @@ class AccountsTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         return $rules;
     }

@@ -9,7 +9,6 @@ use Cake\TestSuite\Fixture\TestFixture;
  */
 class User02sFixture extends TestFixture
 {
-
     /**
      * Fields
      *

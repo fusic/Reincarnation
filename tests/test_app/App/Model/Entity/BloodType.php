@@ -14,7 +14,6 @@ use Cake\ORM\Entity;
  */
 class BloodType extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *

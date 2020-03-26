@@ -13,14 +13,13 @@ use Cake\Validation\Validator;
  */
 class HobbiesTable extends Table
 {
-
     /**
      * Initialize method
      *
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -46,18 +45,18 @@ class HobbiesTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', 'create');
 /*
         $validator
             ->notEmpty('_ids')
             ->add('_ids', 'multiple', [
-		        'rule' => ['min', 1],
-		        'message' => 'hogehoge'
-		    ]);
+                'rule' => ['min', 1],
+                'message' => 'hogehoge'
+            ]);
 */
         return $validator;
     }

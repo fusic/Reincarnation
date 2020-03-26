@@ -18,19 +18,18 @@ use Cake\Utility\Inflector;
  */
 class MembersTableTest extends TestCase
 {
-
     /**
      * Fixtures
      *
      * @var array
      */
     public $fixtures = [
-        'plugin.reincarnation.addresses',
-        'plugin.reincarnation.blood_types',
-        'plugin.reincarnation.hobbies',
-        'plugin.reincarnation.hobbies_members',
-        'plugin.reincarnation.members',
-        'plugin.reincarnation.tels',
+        'plugin.Reincarnation.Addresses',
+        'plugin.Reincarnation.BloodTypes',
+        'plugin.Reincarnation.Hobbies',
+        'plugin.Reincarnation.HobbiesMembers',
+        'plugin.Reincarnation.Members',
+        'plugin.Reincarnation.Tels',
     ];
 
     /**
@@ -38,7 +37,7 @@ class MembersTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->connection = ConnectionManager::get('test');
@@ -73,7 +72,7 @@ class MembersTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Members);
 
@@ -86,7 +85,7 @@ class MembersTableTest extends TestCase
      *
      * @return void
      */
-    public function test_save_delete_hasone()
+    public function test_save_delete_hasone(): void
     {
         //memberとaddressのデータがあることを確認
         $memberCheck = $this->Members->find('all')
@@ -117,14 +116,13 @@ class MembersTableTest extends TestCase
         $this->assertEquals($bloodTypeCheck, 0);
     }
 
-
     /**
      * test_save_delete_belongsto
      * belongstoの削除テスト　
      *
      * @return void
      */
-    public function test_save_delete_belongsto()
+    public function test_save_delete_belongsto(): void
     {
         //memberとaddressのデータがあることを確認
         $memberCheck = $this->Members->find('all')
@@ -160,7 +158,7 @@ class MembersTableTest extends TestCase
      *
      * @return void
      */
-    public function test_save_delete_hasmany()
+    public function test_save_delete_hasmany(): void
     {
         //memberとaddressのデータがあることを確認
         $memberCheck = $this->Members->find('all')
@@ -190,14 +188,13 @@ class MembersTableTest extends TestCase
         $this->assertEquals($telCheck, 0);
     }
 
-
     /**
      * test_save_delete_habtm
      * habtmの削除テスト　
      *
      * @return void
      */
-    public function test_save_delete_habtm()
+    public function test_save_delete_habtm(): void
     {
         //memberとaddressのデータがあることを確認
         $memberCheck = $this->Members->find('all')
@@ -243,6 +240,4 @@ class MembersTableTest extends TestCase
         $this->assertEquals($hobbiesCheck1, 0);
         $this->assertEquals($hobbiesCheck2, 0);
     }
-
-
 }
