@@ -6,7 +6,7 @@ use Cake\ORM\Behavior;
 use Cake\Event\Event;
 use Cake\ORM\Query;
 use ArrayObject;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use Cake\Validation\Validation;
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
@@ -62,7 +62,7 @@ class SoftDeleteBehavior extends Behavior {
 
         $id = $deleteEntity->{$this->_table->getPrimaryKey()};
 
-        $now = Time::now();
+        $now = new FrozenTime();
 
         $delete_data = [];
         if ($this->getConfig('boolean') !== false) {
