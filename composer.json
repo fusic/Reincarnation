@@ -15,7 +15,7 @@
         "source": "https://github.com/fusic/Reincarnation"
     },
     "require": {
-        "cakephp/cakephp": "^3.4.0"
+        "cakephp/cakephp": "^3.8.0"
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "dev-master",
