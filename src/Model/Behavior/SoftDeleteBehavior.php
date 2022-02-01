@@ -100,7 +100,7 @@ class SoftDeleteBehavior extends Behavior {
         }
 
         //アクセス可能なプロパティを見る
-        $properties = $deleteEntity->visibleProperties();
+        $properties = $deleteEntity->getVisible();
         foreach ($properties as $property) {
             //該当プロパティがEntityなら
             //hasone / belongsto /habtmの中間テーブル
