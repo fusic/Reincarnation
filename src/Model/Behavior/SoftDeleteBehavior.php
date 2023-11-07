@@ -4,7 +4,7 @@ namespace Reincarnation\Model\Behavior;
 
 use Cake\ORM\Behavior;
 use Cake\Event\Event;
-use Cake\ORM\Query;
+use Cake\ORM\Query\SelectQuery;
 use ArrayObject;
 use Cake\I18n\DateTime;
 use Cake\Validation\Validation;
@@ -23,11 +23,11 @@ class SoftDeleteBehavior extends Behavior {
     /**
      * beforeFind
      * @param Event $event
-     * @param Query $query
+     * @param SelectQuery $query
      * @param ArrayObject $options
      * @param $primary
      */
-    public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary)
+    public function beforeFind(Event $event, SelectQuery $query, ArrayObject $options, $primary)
     {
         $getOptions = $query->getOptions();
         if (
@@ -191,7 +191,6 @@ class SoftDeleteBehavior extends Behavior {
                     ->select(['existing' => 1])
                     ->where($conditions)
                     ->limit(1)
-                    // ->hydrate(false)
                     ->toArray()
                 );
     }
