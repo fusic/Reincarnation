@@ -6,18 +6,16 @@ use Cake\ORM\Behavior;
 use Cake\Event\Event;
 use Cake\ORM\Query;
 use ArrayObject;
-use Cake\I18n\FrozenTime;
+use Cake\I18n\DateTime;
 use Cake\Validation\Validation;
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
 use Cake\Datasource\EntityInterface;
 
-
-
 class SoftDeleteBehavior extends Behavior {
 
     // デフォルト設定
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'boolean' => 'deleted',
         'timestamp' => 'deleted_date'
     ];
@@ -35,7 +33,7 @@ class SoftDeleteBehavior extends Behavior {
         if (
             !array_key_exists('enableSoftDelete', $getOptions) ||
             $getOptions['enableSoftDelete'] == true
-        ){
+        ) {
             $modelName = $this->_table->getAlias();
             $booleanField = $this->getConfig('boolean');
             $timestampField = $this->getConfig('timestamp');
@@ -62,7 +60,7 @@ class SoftDeleteBehavior extends Behavior {
 
         $id = $deleteEntity->{$this->_table->getPrimaryKey()};
 
-        $now = new FrozenTime();
+        $now = new DateTime();
 
         $delete_data = [];
         if ($this->getConfig('boolean') !== false) {
@@ -151,7 +149,7 @@ class SoftDeleteBehavior extends Behavior {
             array_key_exists('Cake\\Datasource\\EntityInterface', class_implements($property))
         ) {
             //該当EntityのTableを取得
-            $associateTable = TableRegistry::get($property->getSource());
+            $associateTable = TableRegistry::getTableLocator()->get($property->getSource());
             if (!$associateTable->softDelete($property, $associate)) {
                 $result = false;
             }
@@ -178,7 +176,7 @@ class SoftDeleteBehavior extends Behavior {
         }
 
         $sourceModel = $options['sourceModel'];
-        $sourceTable = TableRegistry::get($sourceModel);
+        $sourceTable = TableRegistry::getTableLocator()->get($sourceModel);
 
         $targetField = $options['targetField'];
         $conditions  = [
@@ -193,9 +191,8 @@ class SoftDeleteBehavior extends Behavior {
                     ->select(['existing' => 1])
                     ->where($conditions)
                     ->limit(1)
-                    ->hydrate(false)
+                    // ->hydrate(false)
                     ->toArray()
                 );
     }
-
 }

@@ -1,16 +1,13 @@
 # Reincarnation:CakePHP4 Logical Delete Plugin
 
-[![Build Status](https://travis-ci.org/fusic/Reincarnation.svg?branch=master)](https://travis-ci.org/fusic/Reincarnation)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/fusic/Reincarnation/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/fusic/Reincarnation/?branch=master)
-
 ## Description
 
-Soft delete plugin for CakePHP 4.x.
+Soft delete plugin for CakePHP 5.x.
 
 ## Requirements
 
-- PHP >= 7.2.*
-- CakePHP >= 4.*
+- PHP >= 8.2.*
+- CakePHP >= 5.*
 
 ## Installation
 
@@ -98,4 +95,3 @@ class UsersController extends AppController
     }
 }
 ```
-

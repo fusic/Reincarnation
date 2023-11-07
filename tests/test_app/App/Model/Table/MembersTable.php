@@ -51,7 +51,6 @@ class MembersTable extends Table
             'joinTable' => 'hobbies_members'
         ]);
 
-        //softdelete
         $this->addBehavior('Reincarnation.SoftDelete');
     }
 

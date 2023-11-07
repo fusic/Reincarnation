@@ -14,6 +14,12 @@
         <!-- Add plugin test suites here. -->
     </testsuites>
 
+    <!-- Setup the extension for fixtures -->
+<!--
+    <extensions>
+        <extension class="\Cake\TestSuite\Fixture\PHPUnitExtension" />
+    </extensions>
+-->
     <!-- Setup a listener for fixtures -->
     <!--
     <listeners>

@@ -1,25 +1,28 @@
 <?php
+
 namespace Reincarnation\Test\TestCase\Model\Table;
 
 use Reincarnation\Test\App\Model\Table\AccountsTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Cake\Datasource\ConnectionManager;
-use Cake\TestSuite\Fixture\FixtureManager;
 
 /**
  * App\Model\Table\AccountsTable Test Case
  */
 class AccountsTableTest extends TestCase
 {
+    protected $connection;
+    protected $accounts;
+
     /**
-     * Fixtures
-     *
-     * @var array
+     * @return array
      */
-    public $fixtures = [
-        'plugin.Reincarnation.Accounts',
-    ];
+    public function getFixtures(): array
+    {
+        return [
+            'plugin.Reincarnation.Accounts',
+        ];
+    }
 
     /**
      * setUp method
@@ -30,16 +33,11 @@ class AccountsTableTest extends TestCase
     {
         parent::setUp();
         $this->connection = ConnectionManager::get('test');
-        $this->Accounts = new AccountsTable([
+        $this->accounts = new AccountsTable([
             'alias' => 'Accounts',
             'table' => 'accounts',
             'connection' => $this->connection
         ]);
-
-        //fixtureManagerを呼び出し、fixtureを実行する
-        $this->fixtureManager = new FixtureManager();
-        $this->fixtureManager->fixturize($this);
-        $this->fixtureManager->loadSingle('Accounts');
     }
 
     /**
@@ -49,7 +47,8 @@ class AccountsTableTest extends TestCase
      */
     public function tearDown(): void
     {
-        unset($this->Accounts);
+        unset($this->connection);
+        unset($this->accounts);
 
         parent::tearDown();
     }
@@ -62,22 +61,22 @@ class AccountsTableTest extends TestCase
     public function test_find(): void
     {
         //ID1はfind可能
-        $account_info = $this->Accounts->find('all')
+        $accountInfo = $this->accounts->find('all')
             ->where(['Accounts.id' => 1])
             ->first();
-        $this->assertTrue(!empty($account_info));
+        $this->assertTrue(!empty($accountInfo));
 
-        //ID2はfind不可
-        $account_info = $this->Accounts->find('all')
+        // ID2はfind不可
+        $accountInfo = $this->accounts->find('all')
             ->where(['Accounts.id' => 2])
             ->first();
-        $this->assertFalse(!empty($account_info));
+        $this->assertFalse(!empty($accountInfo));
 
         //削除済みのデータをfindする
-        $account_info = $this->Accounts->find('all',['enableSoftDelete' => false])
+        $accountInfo = $this->accounts->find('all', enableSoftDelete: false)
             ->where(['Accounts.id' => 2])
             ->first();
-        $this->assertTrue(!empty($account_info));
+        $this->assertTrue(!empty($accountInfo));
     }
 
     /**
@@ -91,27 +90,27 @@ class AccountsTableTest extends TestCase
         $data = [
             'name' => 'hoge',
         ];
-        $entity = $this->Accounts->newEntity($data);
-        $save_result = $this->Accounts->save($entity);
+        $entity = $this->accounts->newEntity($data);
+        $save_result = $this->accounts->save($entity);
         $this->assertTrue((bool) $save_result);
 
         $last_id = $save_result->id;
-        $account_info = $this->Accounts->find('all')
+        $accountInfo = $this->accounts->find('all')
             ->where(['Accounts.id' => $last_id])
             ->first();
-        $this->assertTrue(!empty($account_info));
+        $this->assertTrue(!empty($accountInfo));
 
         //削除する
-        $this->assertTrue($this->Accounts->softDelete($account_info));
+        $this->assertTrue($this->accounts->softDelete($accountInfo));
 
         //削除したデータは見つからない
-        $account_info = $this->Accounts->find('all')
+        $accountInfo = $this->accounts->find('all')
             ->where(['Accounts.id' => $last_id])
             ->first();
-        $this->assertFalse(!empty($account_info));
+        $this->assertFalse(!empty($accountInfo));
 
         //削除済みのデータをfindする
-        $delete_info = $this->Accounts->find('all',['enableSoftDelete' => false])
+        $delete_info = $this->accounts->find('all', enableSoftDelete: false)
             ->where(['Accounts.id' => $last_id])
             ->first();
         //削除データが問題なく入っているかの確認

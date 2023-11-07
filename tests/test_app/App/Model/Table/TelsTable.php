@@ -33,7 +33,7 @@ class TelsTable extends Table
             'foreignKey' => 'member_id',
             'className' => 'Reincarnation\Test\App\Model\Table\MembersTable',
         ]);
-        //softdelete
+
         $this->addBehavior('Reincarnation.SoftDelete');
     }
 

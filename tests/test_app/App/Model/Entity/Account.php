@@ -13,10 +13,9 @@ class Account extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'name' => true,
         'deleted' => true,
         'deleted_date' => true,
     ];
-
 }

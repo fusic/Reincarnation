@@ -33,7 +33,7 @@ class BloodTypesTable extends Table
             'foreignKey' => 'blood_type_id',
             'className' => 'Reincarnation\Test\App\Model\Table\MembersTable',
         ]);
-        //softdelete
+
         $this->addBehavior('Reincarnation.SoftDelete');
     }
 

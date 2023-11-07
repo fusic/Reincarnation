@@ -13,7 +13,7 @@ class User04 extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'name' => true,
         // 'delete_flg' => true,
         'deleted' => true,
