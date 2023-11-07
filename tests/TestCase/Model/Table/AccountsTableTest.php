@@ -91,12 +91,12 @@ class AccountsTableTest extends TestCase
             'name' => 'hoge',
         ];
         $entity = $this->accounts->newEntity($data);
-        $save_result = $this->accounts->save($entity);
-        $this->assertTrue((bool) $save_result);
+        $saveResult = $this->accounts->save($entity);
+        $this->assertTrue((bool) $saveResult);
 
-        $last_id = $save_result->id;
+        $lastId = $saveResult->id;
         $accountInfo = $this->accounts->find('all')
-            ->where(['Accounts.id' => $last_id])
+            ->where(['Accounts.id' => $lastId])
             ->first();
         $this->assertTrue(!empty($accountInfo));
 
@@ -105,16 +105,16 @@ class AccountsTableTest extends TestCase
 
         //削除したデータは見つからない
         $accountInfo = $this->accounts->find('all')
-            ->where(['Accounts.id' => $last_id])
+            ->where(['Accounts.id' => $lastId])
             ->first();
         $this->assertFalse(!empty($accountInfo));
 
         //削除済みのデータをfindする
-        $delete_info = $this->accounts->find('all', enableSoftDelete: false)
-            ->where(['Accounts.id' => $last_id])
+        $deleteInfo = $this->accounts->find('all', enableSoftDelete: false)
+            ->where(['Accounts.id' => $lastId])
             ->first();
         //削除データが問題なく入っているかの確認
-        $this->assertTrue($delete_info->deleted);
-        $this->assertTrue(!empty($delete_info->deleted_date));
+        $this->assertTrue($deleteInfo->deleted);
+        $this->assertTrue(!empty($deleteInfo->deleted_date));
     }
 }

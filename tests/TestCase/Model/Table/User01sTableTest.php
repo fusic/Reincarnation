@@ -94,9 +94,9 @@ class User01sTableTest extends TestCase
         $saveResult = $this->user01s->save($entity);
         $this->assertTrue((bool) $saveResult);
 
-        $last_id = $saveResult->id;
+        $lastId = $saveResult->id;
         $userInfo = $this->user01s->find('all')
-            ->where(['User01s.id' => $last_id])
+            ->where(['User01s.id' => $lastId])
             ->first();
         $this->assertTrue(!empty($userInfo));
 
@@ -105,16 +105,16 @@ class User01sTableTest extends TestCase
 
         //削除したデータは見つからない
         $userInfo = $this->user01s->find('all')
-            ->where(['User01s.id' => $last_id])
+            ->where(['User01s.id' => $lastId])
             ->first();
         $this->assertFalse(!empty($userInfo));
 
         //削除済みのデータをfindする
-        $delete_info = $this->user01s->find('all', enableSoftDelete: false)
-            ->where(['User01s.id' => $last_id])
+        $deleteInfo = $this->user01s->find('all', enableSoftDelete: false)
+            ->where(['User01s.id' => $lastId])
             ->first();
         //削除データが問題なく入っているかの確認
-        $this->assertTrue($delete_info->delete_flg);
-        $this->assertTrue(!empty($delete_info->deleted));
+        $this->assertTrue($deleteInfo->delete_flg);
+        $this->assertTrue(!empty($deleteInfo->deleted));
     }
 }
