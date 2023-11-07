@@ -185,9 +185,7 @@ class SoftDeleteBehavior extends Behavior {
 
         return (bool)count(
                     $sourceTable
-                    ->find('all', [
-                        'enableSoftDelete' => false
-                    ])
+                    ->find('all', enableSoftDelete: false)
                     ->select(['existing' => 1])
                     ->where($conditions)
                     ->limit(1)
