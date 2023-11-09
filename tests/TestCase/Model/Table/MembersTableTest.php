@@ -109,23 +109,22 @@ class MembersTableTest extends TestCase
         $this->assertEquals($memberCheck, 1);
         $this->assertEquals($bloodTypeCheck, 1);
 
-        // todo
-        // //データ保存後、findでデータを閲覧可能
-        // $entity = $this->members->find('all')
-        //     ->where(['Members.id' => 1])
-        //     ->contain('BloodTypes')
-        //     ->first();
-        // $this->assertTrue($this->members->softDelete($entity, true));
+        //データ保存後、findでデータを閲覧可能
+        $entity = $this->members->find('all')
+            ->where(['Members.id' => 1])
+            ->contain('BloodTypes')
+            ->first();
+        $this->assertTrue($this->members->softDelete($entity, true));
 
-        // $memberCheck = $this->members->find('all')
-        //     ->where(['Members.id' => 1])
-        //     ->count('Members.id');
-        // $bloodTypeCheck = $this->bloodTypes->find('all')
-        //     ->where(['BloodTypes.id' => 1])
-        //     ->count('BloodTypes.id');
+        $memberCheck = $this->members->find('all')
+            ->where(['Members.id' => 1])
+            ->count('Members.id');
+        $bloodTypeCheck = $this->bloodTypes->find('all')
+            ->where(['BloodTypes.id' => 1])
+            ->count('BloodTypes.id');
 
-        // $this->assertEquals($memberCheck, 0);
-        // $this->assertEquals($bloodTypeCheck, 0);
+        $this->assertEquals($memberCheck, 0);
+        $this->assertEquals($bloodTypeCheck, 0);
     }
 
     /**
@@ -146,23 +145,22 @@ class MembersTableTest extends TestCase
         $this->assertEquals($memberCheck, 1);
         $this->assertEquals($addressCheck, 1);
 
-        // todo
-        // //データ保存後、findでデータを閲覧可能
-        // $entity = $this->members->find('all')
-        //     ->where(['Members.id' => 1])
-        //     ->contain('Addresses')
-        //     ->first();
-        // $this->assertTrue($this->members->softDelete($entity, true));
+        //データ保存後、findでデータを閲覧可能
+        $entity = $this->members->find('all')
+            ->where(['Members.id' => 1])
+            ->contain('Addresses')
+            ->first();
+        $this->assertTrue($this->members->softDelete($entity, true));
 
-        // $memberCheck = $this->members->find('all')
-        //     ->where(['Members.id' => 1])
-        //     ->count('Members.id');
-        // $addressCheck = $this->addresses->find('all')
-        //     ->where(['Addresses.member_id' => 1])
-        //     ->count('Addresses.id');
+        $memberCheck = $this->members->find('all')
+            ->where(['Members.id' => 1])
+            ->count('Members.id');
+        $addressCheck = $this->addresses->find('all')
+            ->where(['Addresses.member_id' => 1])
+            ->count('Addresses.id');
 
-        // $this->assertEquals($memberCheck, 0);
-        // $this->assertEquals($addressCheck, 0);
+        $this->assertEquals($memberCheck, 0);
+        $this->assertEquals($addressCheck, 0);
     }
 
     /**
@@ -183,23 +181,22 @@ class MembersTableTest extends TestCase
         $this->assertEquals($memberCheck, 1);
         $this->assertEquals($telCheck, 2);
 
-        // todo
-        // //データ保存後、findでデータを閲覧可能
-        // $entity = $this->members->find('all')
-        //     ->where(['Members.id' => 1])
-        //     ->contain('Tels')
-        //     ->first();
-        // $this->assertTrue($this->members->softDelete($entity, true));
+        //データ保存後、findでデータを閲覧可能
+        $entity = $this->members->find('all')
+            ->where(['Members.id' => 1])
+            ->contain('Tels')
+            ->first();
+        $this->assertTrue($this->members->softDelete($entity, true));
 
-        // $memberCheck = $this->members->find('all')
-        //     ->where(['Members.id' => 1])
-        //     ->count('Members.id');
-        // $telCheck = $this->tels->find('all')
-        //     ->where(['Tels.member_id' => 1])
-        //     ->count('Tels.id');
+        $memberCheck = $this->members->find('all')
+            ->where(['Members.id' => 1])
+            ->count('Members.id');
+        $telCheck = $this->tels->find('all')
+            ->where(['Tels.member_id' => 1])
+            ->count('Tels.id');
 
-        // $this->assertEquals($memberCheck, 0);
-        // $this->assertEquals($telCheck, 0);
+        $this->assertEquals($memberCheck, 0);
+        $this->assertEquals($telCheck, 0);
     }
 
     /**
@@ -228,31 +225,30 @@ class MembersTableTest extends TestCase
         $this->assertEquals($hobbiesCheck1, 1);
         $this->assertEquals($hobbiesCheck2, 1);
 
-        // todo
-        // //データ保存後、findでデータを閲覧可能
-        // $entity = $this->members->find('all')
-        //     ->where(['Members.id' => 1])
-        //     ->contain('Hobbies')
-        //     ->first();
-        // //この削除のテストを通すためにautoload-devに"App\\Model\\Table\\": "tests/test_app/DummyApp/Model/Table/"を記載
-        // $this->assertTrue($this->members->softDelete($entity, true));
+        //データ保存後、findでデータを閲覧可能
+        $entity = $this->members->find('all')
+            ->where(['Members.id' => 1])
+            ->contain('Hobbies')
+            ->first();
+        //この削除のテストを通すためにautoload-devに"App\\Model\\Table\\": "tests/test_app/DummyApp/Model/Table/"を記載
+        $this->assertTrue($this->members->softDelete($entity, true));
 
-        // $memberCheck = $this->members->find('all')
-        //     ->where(['Members.id' => 1])
-        //     ->count('Members.id');
-        // $hobbiesMembersCheck = $this->hobbiesMembers->find('all')
-        //     ->where(['HobbiesMembers.member_id' => 1])
-        //     ->count('HobbiesMembers.id');
-        // $hobbiesCheck1 = $this->hobbies->find('all')
-        //     ->where(['Hobbies.id' => 1])
-        //     ->count('Hobbies.id');
-        // $hobbiesCheck2 = $this->hobbies->find('all')
-        //     ->where(['Hobbies.id' => 2])
-        //     ->count('Hobbies.id');
+        $memberCheck = $this->members->find('all')
+            ->where(['Members.id' => 1])
+            ->count('Members.id');
+        $hobbiesMembersCheck = $this->hobbiesMembers->find('all')
+            ->where(['HobbiesMembers.member_id' => 1])
+            ->count('HobbiesMembers.id');
+        $hobbiesCheck1 = $this->hobbies->find('all')
+            ->where(['Hobbies.id' => 1])
+            ->count('Hobbies.id');
+        $hobbiesCheck2 = $this->hobbies->find('all')
+            ->where(['Hobbies.id' => 2])
+            ->count('Hobbies.id');
 
-        // $this->assertEquals($memberCheck, 0);
-        // $this->assertEquals($hobbiesMembersCheck, 0);
-        // $this->assertEquals($hobbiesCheck1, 0);
-        // $this->assertEquals($hobbiesCheck2, 0);
+        $this->assertEquals($memberCheck, 0);
+        $this->assertEquals($hobbiesMembersCheck, 0);
+        $this->assertEquals($hobbiesCheck1, 0);
+        $this->assertEquals($hobbiesCheck2, 0);
     }
 }

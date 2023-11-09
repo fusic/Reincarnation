@@ -119,7 +119,6 @@ Cache::setConfig($cache);
 //     ]);
 // }
 
-
 // Ensure default test connection is defined
 ConnectionManager::setConfig(
     'test',

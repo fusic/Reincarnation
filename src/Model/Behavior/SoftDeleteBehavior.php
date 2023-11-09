@@ -142,11 +142,11 @@ class SoftDeleteBehavior extends Behavior
     /**
      * propertyDelete
      *
-     * @param \Cake\ORM\Entity $property
+     * @param mixed $property
      * @param bool $associate
      * @return bool
      */
-    private function propertyDelete(Entity $property, bool $associate): bool
+    private function propertyDelete($property, bool $associate): bool
     {
         $result = true;
         //プロパティがEntityなら消しにかかる

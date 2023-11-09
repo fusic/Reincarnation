@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace Reincarnation\Test\App\Model\Table;
 
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Reincarnation\Test\App\Model\Table\AppTable;
 
 /**
  * Accounts Model
  */
-class AccountsTable extends Table
+class AccountsTable extends AppTable
 {
     /**
      * Initialize method

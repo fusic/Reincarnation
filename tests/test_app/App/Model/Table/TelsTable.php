@@ -4,15 +4,15 @@ declare(strict_types=1);
 namespace Reincarnation\Test\App\Model\Table;
 
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Reincarnation\Test\App\Model\Table\AppTable;
 
 /**
  * Tels Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Members
  */
-class TelsTable extends Table
+class TelsTable extends AppTable
 {
     /**
      * Initialize method

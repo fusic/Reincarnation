@@ -4,15 +4,15 @@ declare(strict_types=1);
 namespace Reincarnation\Test\App\Model\Table;
 
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Reincarnation\Test\App\Model\Table\AppTable;
 
 /**
  * User01s Model
  *
  * DBに削除フラグ、削除日時を指定した場合のテストコード
  */
-class User01sTable extends Table
+class User01sTable extends AppTable
 {
     /**
      * Initialize method

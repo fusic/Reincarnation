@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Reincarnation\Test\App\Model\Table;
 
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Reincarnation\Test\App\Model\Table\AppTable;
 
 /**
  * HobbiesMembers Model
@@ -13,7 +13,7 @@ use Cake\Validation\Validator;
  * @property \Cake\ORM\Association\BelongsTo $Hobbies
  * @property \Cake\ORM\Association\BelongsTo $Members
  */
-class HobbiesMembersTable extends Table
+class HobbiesMembersTable extends AppTable
 {
     /**
      * Initialize method

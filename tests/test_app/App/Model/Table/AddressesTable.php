@@ -4,15 +4,15 @@ declare(strict_types=1);
 namespace Reincarnation\Test\App\Model\Table;
 
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Reincarnation\Test\App\Model\Table\AppTable;
 
 /**
  * Addresses Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Members
  */
-class AddressesTable extends Table
+class AddressesTable extends AppTable
 {
     /**
      * Initialize method

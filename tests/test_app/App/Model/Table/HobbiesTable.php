@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 namespace Reincarnation\Test\App\Model\Table;
 
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Reincarnation\Test\App\Model\Table\AppTable;
 
 /**
  * Hobbies Model
  *
  * @property \Cake\ORM\Association\BelongsToMany $Members
  */
-class HobbiesTable extends Table
+class HobbiesTable extends AppTable
 {
     /**
      * Initialize method
