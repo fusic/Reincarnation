@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Reincarnation\Test\App\Model\Table;
 
 use Cake\ORM\Table;
@@ -14,7 +16,7 @@ class HobbiesTable extends Table
     /**
      * Initialize method
      *
-     * @param array $config The configuration for the Table.
+     * @param  array $config The configuration for the Table.
      * @return void
      */
     public function initialize(array $config): void
@@ -40,7 +42,7 @@ class HobbiesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @param  \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
@@ -48,14 +50,14 @@ class HobbiesTable extends Table
         $validator
             ->integer('id')
             ->allowEmptyString('id', 'create');
-/*
+        /*
         $validator
             ->notEmpty('_ids')
             ->add('_ids', 'multiple', [
                 'rule' => ['min', 1],
                 'message' => 'hogehoge'
             ]);
-*/
+        */
         return $validator;
     }
 }

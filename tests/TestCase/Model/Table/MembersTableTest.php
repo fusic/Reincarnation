@@ -1,16 +1,17 @@
 <?php
+declare(strict_types=1);
 
 namespace Reincarnation\Test\TestCase\Model\Table;
 
+use Cake\Datasource\ConnectionManager;
+use Cake\TestSuite\TestCase;
+use Cake\Utility\Inflector;
 use Reincarnation\Test\App\Model\Table\AddressesTable;
 use Reincarnation\Test\App\Model\Table\BloodTypesTable;
-use Reincarnation\Test\App\Model\Table\HobbiesTable;
 use Reincarnation\Test\App\Model\Table\HobbiesMembersTable;
+use Reincarnation\Test\App\Model\Table\HobbiesTable;
 use Reincarnation\Test\App\Model\Table\MembersTable;
 use Reincarnation\Test\App\Model\Table\TelsTable;
-use Cake\TestSuite\TestCase;
-use Cake\Datasource\ConnectionManager;
-use Cake\Utility\Inflector;
 
 /**
  * App\Model\Table\MembersTable Test Case
@@ -67,7 +68,7 @@ class MembersTableTest extends TestCase
             $this->{$propertyName} = new $tableClass([
                 'alias' => $tableList,
                 'table' => $tableName,
-                'connection' => $this->connection
+                'connection' => $this->connection,
             ]);
         }
     }

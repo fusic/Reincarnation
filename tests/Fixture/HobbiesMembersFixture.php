@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Reincarnation\Test\Fixture;
 
 use Cake\TestSuite\Fixture\TestFixture;
@@ -22,7 +24,7 @@ class HobbiesMembersFixture extends TestFixture
             'deleted' => false,
             'deleted_date' => null,
             'created' => 1455621347,
-            'modified' => 1455621347
+            'modified' => 1455621347,
         ],
         [
             'id' => 2,
@@ -31,7 +33,7 @@ class HobbiesMembersFixture extends TestFixture
             'deleted' => false,
             'deleted_date' => null,
             'created' => 1455621347,
-            'modified' => 1455621347
+            'modified' => 1455621347,
         ],
         [
             'id' => 3,
@@ -40,7 +42,7 @@ class HobbiesMembersFixture extends TestFixture
             'deleted' => false,
             'deleted_date' => null,
             'created' => 1455621347,
-            'modified' => 1455621347
+            'modified' => 1455621347,
         ],
     ];
 }

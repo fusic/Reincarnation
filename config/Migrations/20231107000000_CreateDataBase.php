@@ -1,12 +1,16 @@
 <?php
-
 declare(strict_types=1);
 
 use Migrations\AbstractMigration;
 
 class CreateDataBase extends AbstractMigration
 {
-    public function up()
+    /**
+     * up
+     *
+     * @return void
+     */
+    public function up(): void
     {
         $this->table('accounts')
             ->addColumn('name', 'text', ['length' => null, 'default' => null, 'null' => true, 'comment' => 'name', 'precision' => null])
@@ -103,7 +107,12 @@ class CreateDataBase extends AbstractMigration
             ->create();
     }
 
-    public function down()
+    /**
+     * down
+     *
+     * @return void
+     */
+    public function down(): void
     {
         $this->table('accounts')
             ->drop()

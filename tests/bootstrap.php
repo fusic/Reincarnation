@@ -1,5 +1,10 @@
 <?php
+declare(strict_types=1);
 
+use Cake\Cache\Cache;
+use Cake\Core\Configure;
+use Cake\Datasource\ConnectionManager;
+use Cake\Utility\Filesystem;
 use Migrations\TestSuite\Migrator;
 
 function find_root()
@@ -51,10 +56,10 @@ define('CAKE', CORE_PATH . 'src' . DS);
 require ROOT . '/vendor/autoload.php';
 require CORE_PATH . 'config/bootstrap.php';
 
-Cake\Core\Configure::write('App', ['namespace' => 'App']);
-Cake\Core\Configure::write('debug', 2);
+Configure::write('App', ['namespace' => 'App']);
+Configure::write('debug', 2);
 
-$tmp = new \Cake\Utility\Filesystem;
+$tmp = new Filesystem();
 $tmp->mkdir(TMP . 'cache/models', 0777);
 $tmp->mkdir(TMP . 'cache/persistent', 0777);
 $tmp->mkdir(TMP . 'cache/views', 0777);
@@ -62,25 +67,24 @@ $tmp->mkdir(TMP . 'cache/views', 0777);
 $cache = [
     'default' => [
         'engine' => 'File',
-        'path' => CACHE
+        'path' => CACHE,
     ],
     '_cake_core_' => [
         'className' => 'File',
         'prefix' => 'search_myapp_cake_core_',
         'path' => CACHE . 'persistent/',
         'serialize' => true,
-        'duration' => '+10 seconds'
+        'duration' => '+10 seconds',
     ],
     '_cake_model_' => [
         'className' => 'File',
         'prefix' => 'search_my_app_cake_model_',
         'path' => CACHE . 'models/',
         'serialize' => 'File',
-        'duration' => '+10 seconds'
-    ]
+        'duration' => '+10 seconds',
+    ],
 ];
-
-Cake\Cache\Cache::setConfig($cache);
+Cache::setConfig($cache);
 
 // //travis対応
 // if (!getenv('TESTDB') || getenv('TESTDB') == 'postgresql') {
@@ -89,7 +93,7 @@ Cake\Cache\Cache::setConfig($cache);
 //         putenv('db_dsn=sqlite::memory:');
 //     }
 
-//     Cake\Datasource\ConnectionManager::setConfig('test', [
+//     ConnectionManager::setConfig('test', [
 //         'className' => 'Cake\Database\Connection',
 //         'driver' => 'Cake\Database\Driver\Postgres',
 //         //'dsn' => getenv('db_dsn'),
@@ -104,7 +108,7 @@ Cake\Cache\Cache::setConfig($cache);
 //         putenv('db_dsn=sqlite::memory:');
 //     }
 
-//     Cake\Datasource\ConnectionManager::setConfig('test', [
+//     ConnectionManager::setConfig('test', [
 //         'className' => 'Cake\Database\Connection',
 //         'driver' => 'Cake\Database\Driver\Mysql',
 //         //'dsn' => getenv('db_dsn'),
@@ -117,7 +121,9 @@ Cake\Cache\Cache::setConfig($cache);
 
 
 // Ensure default test connection is defined
-Cake\Datasource\ConnectionManager::setConfig('test', [
+ConnectionManager::setConfig(
+    'test',
+    [
     'className' => 'Cake\Database\Connection',
     'driver' => 'Cake\Database\Driver\Postgres',
     //'dsn' => getenv('db_dsn'),
@@ -125,7 +131,8 @@ Cake\Datasource\ConnectionManager::setConfig('test', [
     'database' => 'cake_test_db',
     'username' => 'postgres',
     'password' => 'postgres',
-    'timezone' => 'UTC'
-]);
+    'timezone' => 'UTC',
+    ]
+);
 
 (new Migrator())->run();

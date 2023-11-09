@@ -43,5 +43,9 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
+    },
+    "scripts": {
+        "phpcs": "phpcs --colors -p -s --standard=phpcs.xml.dist config/ src/ tests/",
+        "phpcbf": "phpcbf --colors --parallel=16 -p config/ src/ tests/"
     }
 }

@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Reincarnation\Test\TestCase\Model\Table;
 
-use Reincarnation\Test\App\Model\Table\AccountsTable;
-use Cake\TestSuite\TestCase;
 use Cake\Datasource\ConnectionManager;
+use Cake\TestSuite\TestCase;
+use Reincarnation\Test\App\Model\Table\AccountsTable;
 
 /**
  * App\Model\Table\AccountsTable Test Case
@@ -36,7 +37,7 @@ class AccountsTableTest extends TestCase
         $this->accounts = new AccountsTable([
             'alias' => 'Accounts',
             'table' => 'accounts',
-            'connection' => $this->connection
+            'connection' => $this->connection,
         ]);
     }
 
@@ -92,7 +93,7 @@ class AccountsTableTest extends TestCase
         ];
         $entity = $this->accounts->newEntity($data);
         $saveResult = $this->accounts->save($entity);
-        $this->assertTrue((bool) $saveResult);
+        $this->assertTrue((bool)$saveResult);
 
         $lastId = $saveResult->id;
         $accountInfo = $this->accounts->find('all')

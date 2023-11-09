@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Reincarnation\Test\App\Model\Table;
 
 use Cake\ORM\RulesChecker;
@@ -9,14 +11,13 @@ use Cake\Validation\Validator;
  * User02s Model
  *
  * DBに削除フラグのみ、削除日時は無しの場合のテストコード
- *
  */
 class User02sTable extends Table
 {
     /**
      * Initialize method
      *
-     * @param array $config The configuration for the Table.
+     * @param  array $config The configuration for the Table.
      * @return void
      */
     public function initialize(array $config): void
@@ -33,7 +34,7 @@ class User02sTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @param  \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
@@ -52,7 +53,7 @@ class User02sTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @param  \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker

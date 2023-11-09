@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Reincarnation\Test\Fixture;
 
 use Cake\TestSuite\Fixture\TestFixture;
@@ -21,7 +23,7 @@ class BloodTypesFixture extends TestFixture
             'deleted' => false,
             'deleted_date' => null,
             'created' => 1455621327,
-            'modified' => 1455621327
+            'modified' => 1455621327,
         ],
         [
             'id' => 2,
@@ -29,7 +31,7 @@ class BloodTypesFixture extends TestFixture
             'deleted' => false,
             'deleted_date' => null,
             'created' => 1455621327,
-            'modified' => 1455621327
+            'modified' => 1455621327,
         ],
         [
             'id' => 3,
@@ -37,7 +39,7 @@ class BloodTypesFixture extends TestFixture
             'deleted' => false,
             'deleted_date' => null,
             'created' => 1455621327,
-            'modified' => 1455621327
+            'modified' => 1455621327,
         ],
         [
             'id' => 4,
@@ -45,7 +47,7 @@ class BloodTypesFixture extends TestFixture
             'deleted' => false,
             'deleted_date' => null,
             'created' => 1455621327,
-            'modified' => 1455621327
+            'modified' => 1455621327,
         ],
     ];
 }
