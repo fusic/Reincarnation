@@ -3,3 +3,6 @@
 /phpunit.xml
 /vendor
 /tmp
+
+.phpunit.cache
+.phpunit.result.cache

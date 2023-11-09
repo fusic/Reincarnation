@@ -106,36 +106,47 @@ class CreateDataBase extends AbstractMigration
     public function down()
     {
         $this->table('accounts')
-            ->drop();
+            ->drop()
+            ->update();
 
         $this->table('addresses')
-            ->drop();
+            ->drop()
+            ->update();
 
         $this->table('blood_types')
-            ->drop();
+            ->drop()
+            ->update();
 
         $this->table('hobbies')
-            ->drop();
+            ->drop()
+            ->update();
 
         $this->table('hobbies_members')
-            ->drop();
+            ->drop()
+            ->update();
 
         $this->table('members')
-            ->drop();
+            ->drop()
+            ->update();
 
         $this->table('tels')
-            ->drop();
+            ->drop()
+            ->update();
 
         $this->table('user01s')
-            ->drop();
+            ->drop()
+            ->update();
 
         $this->table('user02s')
-            ->drop();
+            ->drop()
+            ->update();
 
         $this->table('user03s')
-            ->drop();
+            ->drop()
+            ->update();
 
         $this->table('user04s')
-            ->drop();
+            ->drop()
+            ->update();
     }
 }
