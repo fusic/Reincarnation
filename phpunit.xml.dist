@@ -11,27 +11,9 @@
         <testsuite name="All Tests">
             <directory>./tests/TestCase</directory>
         </testsuite>
-        <!-- Add plugin test suites here. -->
     </testsuites>
 
     <!-- Setup the extension for fixtures -->
-<!--
-    <extensions>
-        <extension class="\Cake\TestSuite\Fixture\PHPUnitExtension" />
-    </extensions>
--->
-    <!-- Setup a listener for fixtures -->
-    <!--
-    <listeners>
-        <listener
-        class="\Cake\TestSuite\Fixture\FixtureInjector"
-        file="./vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php">
-            <arguments>
-                <object class="\Cake\TestSuite\Fixture\FixtureManager" />
-            </arguments>
-        </listener>
-    </listeners>
-    -->
     <php>
         <!-- Postgres
         <env name="db_dsn" value="postgres://root@localhost/cake_test_db"/>
