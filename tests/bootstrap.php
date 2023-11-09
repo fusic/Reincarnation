@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Database\Connection;
+use Cake\Database\Driver\Mysql;
+use Cake\Database\Driver\Postgres;
 use Cake\Datasource\ConnectionManager;
 use Cake\Utility\Filesystem;
 use Migrations\TestSuite\Migrator;
@@ -119,19 +122,26 @@ Cache::setConfig($cache);
 //     ]);
 // }
 
-// Ensure default test connection is defined
-ConnectionManager::setConfig(
-    'test',
-    [
-    'className' => 'Cake\Database\Connection',
-    'driver' => 'Cake\Database\Driver\Postgres',
+// ConnectionManager::setConfig('test', [
+//     'className' => 'Cake\Database\Connection',
+//     'driver' => 'Cake\Database\Driver\Postgres',
+//     //'dsn' => getenv('db_dsn'),
+//     'host' => 'postgres12',
+//     'database' => 'cake_test_db',
+//     'username' => 'postgres',
+//     'password' => 'postgres',
+//     'timezone' => 'UTC',
+// ]);
+
+ConnectionManager::setConfig('test', [
+    'className' => Connection::class,
+    'driver' => env('TEST_DRIVIER'),
     //'dsn' => getenv('db_dsn'),
-    'host' => 'postgres12',
-    'database' => 'cake_test_db',
-    'username' => 'postgres',
-    'password' => 'postgres',
+    'host' => env('TEST_HOST'),
+    'database' => env('TEST_DB_NAME'),
+    'username' => env('TEST_USER_NAME'),
+    'password' => env('TEST_USER_PW'),
     'timezone' => 'UTC',
-    ]
-);
+]);
 
 (new Migrator())->run();
