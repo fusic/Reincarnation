@@ -19,6 +19,7 @@
         "cakephp/cakephp": "~5.0"
     },
     "require-dev": {
+        "josegonzalez/dotenv": "*",
         "cakephp/migrations": "*",
         "cakephp/cakephp-codesniffer": "*",
         "phpunit/phpunit": "*"

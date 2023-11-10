@@ -9,6 +9,7 @@ use Cake\Database\Driver\Postgres;
 use Cake\Datasource\ConnectionManager;
 use Cake\Utility\Filesystem;
 use Migrations\TestSuite\Migrator;
+use function Cake\Core\env;
 
 function find_root()
 {
@@ -58,6 +59,13 @@ define('CAKE', CORE_PATH . 'src' . DS);
 
 require ROOT . '/vendor/autoload.php';
 require CORE_PATH . 'config/bootstrap.php';
+require CAKE . 'functions.php';
+
+$dotenv = new \josegonzalez\Dotenv\Loader([CONFIG . '.env']);
+$dotenv->parse()
+    ->putenv()
+    ->toEnv()
+    ->toServer();
 
 Configure::write('App', ['namespace' => 'App']);
 Configure::write('debug', 2);
@@ -135,7 +143,7 @@ Cache::setConfig($cache);
 
 ConnectionManager::setConfig('test', [
     'className' => Connection::class,
-    'driver' => env('TEST_DRIVIER'),
+    'driver' => '\\Cake\\Database\\Driver\\' . env('TEST_DRIVIER'),
     //'dsn' => getenv('db_dsn'),
     'host' => env('TEST_HOST'),
     'database' => env('TEST_DB_NAME'),

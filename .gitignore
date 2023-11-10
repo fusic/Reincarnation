@@ -4,5 +4,7 @@
 /vendor
 /tmp
 
+/config/.env
+
 .phpunit.cache
 .phpunit.result.cache
