@@ -16,13 +16,20 @@ jobs:
       mysql:
         image: mysql:8.0
         ports:
-          - 5432:5432
+          - 3306:3306
         env:
+          MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: default_test
           MYSQL_USER: default
           MYSQL_PASSWORD: default
 
     steps:
+      - name: Wait for MySQL
+        run: |
+          while ! mysqladmin ping --host=127.0.0.1 --password=$MYSQL_ROOT_PASSWORD --silent; do
+            sleep 1
+          done
+
       - name: Checkout
         uses: actions/checkout@v3
 

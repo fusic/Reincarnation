@@ -33,7 +33,7 @@ class SoftDeleteBehavior extends Behavior
     {
         $getOptions = $query->getOptions();
         if (!array_key_exists('enableSoftDelete', $getOptions)
-            || $getOptions['enableSoftDelete'] == true
+            || $getOptions['enableSoftDelete'] === true
         ) {
             $modelName = $this->_table->getAlias();
             $booleanField = $this->getConfig('boolean');
