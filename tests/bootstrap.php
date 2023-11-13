@@ -7,6 +7,7 @@ use Cake\Database\Connection;
 // use Cake\Database\Driver\Mysql;
 // use Cake\Database\Driver\Postgres;
 use Cake\Datasource\ConnectionManager;
+use Cake\Network\Socket;
 use Cake\Utility\Filesystem;
 use Migrations\TestSuite\Migrator;
 use function Cake\Core\env;
@@ -140,7 +141,11 @@ Cache::setConfig($cache);
 //     'password' => 'postgres',
 //     'timezone' => 'UTC',
 // ]);
-debug(env('TEST_DRIVIER'));
+
+(new Socket)->setConfig('test', [
+    'protocol' => 'tcp',
+]);
+
 ConnectionManager::setConfig('test', [
     'className' => Connection::class,
     'driver' => '\\Cake\\Database\\Driver\\' . env('TEST_DRIVIER'),
@@ -150,7 +155,6 @@ ConnectionManager::setConfig('test', [
     'username' => env('TEST_USER_NAME'),
     'password' => env('TEST_USER_PW'),
     'timezone' => 'UTC',
-    'protocol' => 'tcp',
 ]);
 
 (new Migrator())->run();
