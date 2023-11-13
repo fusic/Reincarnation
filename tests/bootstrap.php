@@ -150,6 +150,7 @@ ConnectionManager::setConfig('test', [
     'username' => env('TEST_USER_NAME'),
     'password' => env('TEST_USER_PW'),
     'timezone' => 'UTC',
+    'protocol' => 'tcp',
 ]);
 
 (new Migrator())->run();
