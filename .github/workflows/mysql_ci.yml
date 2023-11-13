@@ -24,12 +24,6 @@ jobs:
           MYSQL_PASSWORD: default
 
     steps:
-      - name: Show databases for root user
-        run: mysql --protocol=tcp -h localhost -P 3306 -u root -proot -e "SHOW DATABASES"
-
-      - name: Show databases for default
-        run: mysql --protocol=tcp -h localhost -P 3306 -u default -pdefault -e "SHOW DATABASES"
-
       - name: Checkout
         uses: actions/checkout@v3
 
