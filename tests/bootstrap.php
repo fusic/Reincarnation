@@ -140,7 +140,7 @@ Cache::setConfig($cache);
 //     'password' => 'postgres',
 //     'timezone' => 'UTC',
 // ]);
-
+debug(env('TEST_DRIVIER'));
 ConnectionManager::setConfig('test', [
     'className' => Connection::class,
     'driver' => '\\Cake\\Database\\Driver\\' . env('TEST_DRIVIER'),
