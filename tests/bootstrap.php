@@ -142,9 +142,7 @@ Cache::setConfig($cache);
 //     'timezone' => 'UTC',
 // ]);
 
-(new Socket())->setConfig('test', [
-    'protocol' => 'tcp',
-]);
+new Socket(['protocol' => 'tcp']);
 
 ConnectionManager::setConfig('test', [
     'className' => Connection::class,
