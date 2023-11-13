@@ -1,0 +1,51 @@
+name: mysql_ci
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - "**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 5432:5432
+        env:
+          MYSQL_DATABASE: default_test
+          MYSQL_USER: default
+          MYSQL_PASSWORD: default
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup PHP 8.1
+        run: sudo update-alternatives --set php /usr/bin/php8.1
+
+      - name: php check
+        run: php -v
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: composer install
+        run: composer install --prefer-dist --no-progress
+
+      - name: copy .env
+        run: cp config/.env.mysql.ci config/.env
+
+      - name: phpunit
+        run: composer test
