@@ -4,10 +4,7 @@ declare(strict_types=1);
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Database\Connection;
-// use Cake\Database\Driver\Mysql;
-// use Cake\Database\Driver\Postgres;
 use Cake\Datasource\ConnectionManager;
-use Cake\Network\Socket;
 use Cake\Utility\Filesystem;
 use Migrations\TestSuite\Migrator;
 use function Cake\Core\env;
@@ -98,56 +95,9 @@ $cache = [
 ];
 Cache::setConfig($cache);
 
-// //travis対応
-// if (!getenv('TESTDB') || getenv('TESTDB') == 'postgresql') {
-//     if (!getenv('db_class')) {
-//         putenv('db_class=Cake\Database\Driver\Postgres');
-//         putenv('db_dsn=sqlite::memory:');
-//     }
-
-//     ConnectionManager::setConfig('test', [
-//         'className' => 'Cake\Database\Connection',
-//         'driver' => 'Cake\Database\Driver\Postgres',
-//         //'dsn' => getenv('db_dsn'),
-//         'database' => 'cake_test_db',
-//         'username' => 'postgres',
-//         'password' => '',
-//         'timezone' => 'UTC'
-//     ]);
-// } else {
-//     if (!getenv('db_class')) {
-//         putenv('db_class=Cake\Database\Driver\Mysql');
-//         putenv('db_dsn=sqlite::memory:');
-//     }
-
-//     ConnectionManager::setConfig('test', [
-//         'className' => 'Cake\Database\Connection',
-//         'driver' => 'Cake\Database\Driver\Mysql',
-//         //'dsn' => getenv('db_dsn'),
-//         'database' => 'cake_test_db',
-//         'username' => 'root',
-//         'password' => '',
-//         'timezone' => 'UTC'
-//     ]);
-// }
-
-// ConnectionManager::setConfig('test', [
-//     'className' => 'Cake\Database\Connection',
-//     'driver' => 'Cake\Database\Driver\Postgres',
-//     //'dsn' => getenv('db_dsn'),
-//     'host' => 'postgres12',
-//     'database' => 'cake_test_db',
-//     'username' => 'postgres',
-//     'password' => 'postgres',
-//     'timezone' => 'UTC',
-// ]);
-
-new Socket(['protocol' => 'tcp']);
-
 ConnectionManager::setConfig('test', [
     'className' => Connection::class,
     'driver' => '\\Cake\\Database\\Driver\\' . env('TEST_DRIVIER'),
-    //'dsn' => getenv('db_dsn'),
     'host' => env('TEST_HOST'),
     'database' => env('TEST_DB_NAME'),
     'username' => env('TEST_USER_NAME'),
