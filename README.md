@@ -6,7 +6,7 @@ Soft delete plugin for CakePHP 5.x.
 
 ## Requirements
 
-- PHP >= 8.2.*
+- PHP >= 8.1.*
 - CakePHP >= 5.*
 
 ## Installation
