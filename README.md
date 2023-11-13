@@ -1,4 +1,4 @@
-# Reincarnation:CakePHP5 Logical Delete Plugin
+# Reincarnation
 
 ## Description
 
