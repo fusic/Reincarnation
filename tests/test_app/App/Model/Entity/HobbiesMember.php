@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Reincarnation\Test\App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -25,7 +27,7 @@ class HobbiesMember extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         '*' => true,
         'id' => false,
     ];

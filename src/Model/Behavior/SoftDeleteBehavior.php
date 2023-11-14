@@ -1,41 +1,40 @@
 <?php
+declare(strict_types=1);
 
 namespace Reincarnation\Model\Behavior;
 
-use Cake\ORM\Behavior;
-use Cake\Event\Event;
-use Cake\ORM\Query;
 use ArrayObject;
-use Cake\I18n\FrozenTime;
-use Cake\Validation\Validation;
+use Cake\Event\EventInterface;
+use Cake\I18n\DateTime;
+use Cake\ORM\Behavior;
 use Cake\ORM\Entity;
+use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\TableRegistry;
-use Cake\Datasource\EntityInterface;
+use Cake\Validation\Validation;
 
-
-
-class SoftDeleteBehavior extends Behavior {
-
+class SoftDeleteBehavior extends Behavior
+{
     // デフォルト設定
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'boolean' => 'deleted',
-        'timestamp' => 'deleted_date'
+        'timestamp' => 'deleted_date',
     ];
 
     /**
      * beforeFind
-     * @param Event $event
-     * @param Query $query
-     * @param ArrayObject $options
-     * @param $primary
+     *
+     * @param \Cake\Event\EventInterface $event
+     * @param \Cake\ORM\Query\SelectQuery $query
+     * @param \ArrayObject $options
+     * @param bool $primary
+     * @return void
      */
-    public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary)
+    public function beforeFind(EventInterface $event, SelectQuery $query, ArrayObject $options, bool $primary): void
     {
         $getOptions = $query->getOptions();
-        if (
-            !array_key_exists('enableSoftDelete', $getOptions) ||
-            $getOptions['enableSoftDelete'] == true
-        ){
+        if (!array_key_exists('enableSoftDelete', $getOptions)
+            || $getOptions['enableSoftDelete'] === true
+        ) {
             $modelName = $this->_table->getAlias();
             $booleanField = $this->getConfig('boolean');
             $timestampField = $this->getConfig('timestamp');
@@ -43,37 +42,39 @@ class SoftDeleteBehavior extends Behavior {
                 $query->where([$modelName . '.' . $booleanField => false]);
             }
             if ($booleanField === false && $timestampField !== false && $this->_table->hasField($timestampField)) {
-                $query->where([$modelName . '.' . $timestampField .' IS' => null]);
+                $query->where([$modelName . '.' . $timestampField . ' IS' => null]);
             }
         }
     }
 
     /**
      * softDelete
-     * @param Entity $deleteEntity
-     * @param Boolean $associate
+     *
+     * @param \Cake\ORM\Entity $deleteEntity
+     * @param bool $associate
+     * @return bool
      */
-    public function softDelete($deleteEntity, $associate = false)
+    public function softDelete(Entity $deleteEntity, bool $associate = false): bool
     {
         //データがぞんざいしない場合はエラー
-        if (!$this->dataExist($deleteEntity->{$this->_table->getPrimaryKey()})){
+        if (!$this->dataExist($deleteEntity->{$this->_table->getPrimaryKey()})) {
             return false;
         }
 
         $id = $deleteEntity->{$this->_table->getPrimaryKey()};
 
-        $now = new FrozenTime();
+        $now = new DateTime();
 
-        $delete_data = [];
+        $deleteData = [];
         if ($this->getConfig('boolean') !== false) {
-            $delete_data[$this->getConfig('boolean')] = true;
+            $deleteData[$this->getConfig('boolean')] = true;
         }
         if ($this->getConfig('timestamp') !== false) {
-            $delete_data[$this->getConfig('timestamp')] = $now;
+            $deleteData[$this->getConfig('timestamp')] = $now;
         }
         $saveEntity = $this->_table->patchEntity(
             $deleteEntity,
-            $delete_data,
+            $deleteData,
             //バリデーションはかけない
             ['validate' => false]
         );
@@ -92,9 +93,8 @@ class SoftDeleteBehavior extends Behavior {
         }
 
         //リレーションを見ない設定の場合はそのまま返す
-        if (
-            $result === false ||
-            $associate === false
+        if ($result === false
+            || $associate === false
         ) {
             return $result;
         }
@@ -106,7 +106,7 @@ class SoftDeleteBehavior extends Behavior {
             //hasone / belongsto /habtmの中間テーブル
             if (!$this->propertyDelete($deleteEntity->{$property}, $associate)) {
                 $result = false;
-            } else if (is_array($deleteEntity->{$property})) {
+            } elseif (is_array($deleteEntity->{$property})) {
                 //hasmany / habtm
                 foreach ($deleteEntity->{$property} as $hasmanyProperty) {
                     if (!$this->propertyDelete($hasmanyProperty, $associate)) {
@@ -121,9 +121,11 @@ class SoftDeleteBehavior extends Behavior {
 
     /**
      * dataExist
-     * @param Integer $id
+     *
+     * @param int $id
+     * @return bool
      */
-    private function dataExist($id)
+    private function dataExist(int $id): bool
     {
         //数値などのチェック
         if (!$id || !Validation::naturalNumber($id)) {
@@ -133,69 +135,67 @@ class SoftDeleteBehavior extends Behavior {
         $data = $this->_table->find()
             ->where([$this->_table->getAlias() . '.' . $this->_table->getPrimaryKey() => $id])
             ->first();
+
         return !empty($data);
     }
 
     /**
      * propertyDelete
-     * @param Entity $property
-     * @param Boolean $associate
+     *
+     * @param mixed $property
+     * @param bool $associate
+     * @return bool
      */
-    private function propertyDelete($property, $associate)
+    private function propertyDelete($property, bool $associate): bool
     {
         $result = true;
         //プロパティがEntityなら消しにかかる
-        if (
-            is_object($property) &&
+        if (is_object($property)
             // 該当objectがEntityかどうかチェック
-            array_key_exists('Cake\\Datasource\\EntityInterface', class_implements($property))
+            && array_key_exists('Cake\\Datasource\\EntityInterface', class_implements($property))
         ) {
             //該当EntityのTableを取得
-            $associateTable = TableRegistry::get($property->getSource());
+            $associateTable = TableRegistry::getTableLocator()->get($property->getSource());
             if (!$associateTable->softDelete($property, $associate)) {
                 $result = false;
             }
         }
+
         return $result;
     }
 
-    ############################################################
-    #### For Validation
     /**
      * strictExistIn
      *
      * SoftDeletableを無視した厳密な存在チェック
-     * @param $entity Entity
-     * @param Array   options
+     *
+     * @param \Cake\ORM\Entity $entity
+     * @param array $options
+     * @return bool
      */
-    public function strictExistIn(Entity $entity, $options)
+    public function strictExistIn(Entity $entity, array $options): bool
     {
-        if (
-            !isset($options['sourceModel']) ||
-            !isset($options['targetField'])
-            ) {
+        if (!isset($options['sourceModel'])
+            || !isset($options['targetField'])
+        ) {
             return false;
         }
 
         $sourceModel = $options['sourceModel'];
-        $sourceTable = TableRegistry::get($sourceModel);
+        $sourceTable = TableRegistry::getTableLocator()->get($sourceModel);
 
         $targetField = $options['targetField'];
-        $conditions  = [
-            $sourceModel . '.' . $sourceTable->primaryKey() => $entity->{$targetField}
+        $conditions = [
+            $sourceModel . '.' . $sourceTable->primaryKey() => $entity->{$targetField},
         ];
 
         return (bool)count(
-                    $sourceTable
-                    ->find('all', [
-                        'enableSoftDelete' => false
-                    ])
-                    ->select(['existing' => 1])
-                    ->where($conditions)
-                    ->limit(1)
-                    ->hydrate(false)
-                    ->toArray()
-                );
+            $sourceTable
+                ->find('all', enableSoftDelete: false)
+                ->select(['existing' => 1])
+                ->where($conditions)
+                ->limit(1)
+                ->toArray()
+        );
     }
-
 }

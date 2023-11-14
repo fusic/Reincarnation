@@ -1,6 +1,16 @@
 <?php
+declare(strict_types=1);
 
-function find_root() {
+use Cake\Cache\Cache;
+use Cake\Core\Configure;
+use Cake\Database\Connection;
+use Cake\Datasource\ConnectionManager;
+use Cake\Utility\Filesystem;
+use Migrations\TestSuite\Migrator;
+use function Cake\Core\env;
+
+function find_root()
+{
     $root = dirname(__DIR__);
     if (is_dir($root . '/vendor/cakephp/cakephp')) {
         return $root;
@@ -17,7 +27,8 @@ function find_root() {
     }
 }
 
-function find_app() {
+function find_app()
+{
     if (is_dir(ROOT . '/App')) {
         return 'App';
     }
@@ -27,8 +38,8 @@ function find_app() {
     }
 }
 
-if (!defined('DS')){
-define('DS', DIRECTORY_SEPARATOR);
+if (!defined('DS')) {
+    define('DS', DIRECTORY_SEPARATOR);
 }
 define('ROOT', find_root());
 define('APP_DIR', find_app());
@@ -46,70 +57,52 @@ define('CAKE', CORE_PATH . 'src' . DS);
 
 require ROOT . '/vendor/autoload.php';
 require CORE_PATH . 'config/bootstrap.php';
+require CAKE . 'functions.php';
 
-Cake\Core\Configure::write('App', ['namespace' => 'App']);
-Cake\Core\Configure::write('debug', 2);
+$dotenv = new \josegonzalez\Dotenv\Loader([CONFIG . '.env']);
+$dotenv->parse()
+    ->putenv()
+    ->toEnv()
+    ->toServer();
 
-$Tmp = new \Cake\Filesystem\Folder(TMP);
-$Tmp->create(TMP . 'cache/models', 0777);
-$Tmp->create(TMP . 'cache/persistent', 0777);
-$Tmp->create(TMP . 'cache/views', 0777);
+Configure::write('App', ['namespace' => 'App']);
+Configure::write('debug', 2);
+
+$tmp = new Filesystem();
+$tmp->mkdir(TMP . 'cache/models', 0777);
+$tmp->mkdir(TMP . 'cache/persistent', 0777);
+$tmp->mkdir(TMP . 'cache/views', 0777);
 
 $cache = [
     'default' => [
         'engine' => 'File',
-        'path' => CACHE
+        'path' => CACHE,
     ],
     '_cake_core_' => [
         'className' => 'File',
         'prefix' => 'search_myapp_cake_core_',
         'path' => CACHE . 'persistent/',
         'serialize' => true,
-        'duration' => '+10 seconds'
+        'duration' => '+10 seconds',
     ],
     '_cake_model_' => [
         'className' => 'File',
         'prefix' => 'search_my_app_cake_model_',
         'path' => CACHE . 'models/',
         'serialize' => 'File',
-        'duration' => '+10 seconds'
-    ]
+        'duration' => '+10 seconds',
+    ],
 ];
+Cache::setConfig($cache);
 
-Cake\Cache\Cache::setConfig($cache);
+ConnectionManager::setConfig('test', [
+    'className' => Connection::class,
+    'driver' => '\\Cake\\Database\\Driver\\' . env('TEST_DRIVIER'),
+    'host' => env('TEST_HOST'),
+    'database' => env('TEST_DB_NAME'),
+    'username' => env('TEST_USER_NAME'),
+    'password' => env('TEST_USER_PW'),
+    'timezone' => 'UTC',
+]);
 
-// Ensure default test connection is defined
-
-//travis対応
-if (!getenv('TESTDB') || getenv('TESTDB') == 'postgresql'){
-    if (!getenv('db_class')) {
-        putenv('db_class=Cake\Database\Driver\Postgres');
-        putenv('db_dsn=sqlite::memory:');
-    }
-
-    Cake\Datasource\ConnectionManager::setConfig('test', [
-        'className' => 'Cake\Database\Connection',
-        'driver' => 'Cake\Database\Driver\Postgres',
-        //'dsn' => getenv('db_dsn'),
-        'database' => 'cake_test_db',
-        'username' => 'postgres',
-        'password' => '',
-        'timezone' => 'UTC'
-    ]);
-} else {
-    if (!getenv('db_class')) {
-        putenv('db_class=Cake\Database\Driver\Mysql');
-        putenv('db_dsn=sqlite::memory:');
-    }
-
-    Cake\Datasource\ConnectionManager::setConfig('test', [
-        'className' => 'Cake\Database\Connection',
-        'driver' => 'Cake\Database\Driver\Mysql',
-        //'dsn' => getenv('db_dsn'),
-        'database' => 'cake_test_db',
-        'username' => 'root',
-        'password' => '',
-        'timezone' => 'UTC'
-    ]);
-
-}
+(new Migrator())->run();

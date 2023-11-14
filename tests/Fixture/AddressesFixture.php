@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Reincarnation\Test\Fixture;
 
 use Cake\TestSuite\Fixture\TestFixture;
@@ -10,31 +12,11 @@ use Cake\TestSuite\Fixture\TestFixture;
 class AddressesFixture extends TestFixture
 {
     /**
-     * Fields
-     *
-     * @var array
-     */
-    // @codingStandardsIgnoreStart
-    public $fields = [
-        'id' => ['type' => 'integer', 'length' => 10, 'autoIncrement' => true, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null],
-        'name' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'fixed' => null],
-        'member_id' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
-        'deleted' => ['type' => 'boolean', 'length' => null, 'default' => 0, 'null' => false, 'comment' => 'deleted', 'precision' => null],
-        'deleted_date' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => 'deleted_date', 'precision' => null],
-        'created' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => 'created', 'precision' => null],
-        'modified' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => 'modified', 'precision' => null],
-        '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
-        ],
-    ];
-    // @codingStandardsIgnoreEnd
-
-    /**
      * Records
      *
      * @var array
      */
-    public $records = [
+    public array $records = [
         [
             'id' => 1,
             'name' => 'fukuoka tenjin',
@@ -42,7 +24,7 @@ class AddressesFixture extends TestFixture
             'deleted' => false,
             'deleted_date' => null,
             'created' => 1455621317,
-            'modified' => 1455621317
+            'modified' => 1455621317,
         ],
         [
             'id' => 2,
@@ -51,7 +33,7 @@ class AddressesFixture extends TestFixture
             'deleted' => false,
             'deleted_date' => null,
             'created' => 1455621317,
-            'modified' => 1455621317
+            'modified' => 1455621317,
         ],
         [
             'id' => 3,
@@ -60,7 +42,7 @@ class AddressesFixture extends TestFixture
             'deleted' => false,
             'deleted_date' => null,
             'created' => 1455621317,
-            'modified' => 1455621317
+            'modified' => 1455621317,
         ],
     ];
 }

@@ -1,25 +1,29 @@
 <?php
+declare(strict_types=1);
+
 namespace Reincarnation\Test\TestCase\Model\Table;
 
-use Reincarnation\Test\App\Model\Table\User02sTable;
-use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase;
 use Cake\Datasource\ConnectionManager;
-use Cake\TestSuite\Fixture\FixtureManager;
+use Cake\TestSuite\TestCase;
+use Reincarnation\Test\App\Model\Table\User02sTable;
 
 /**
  * App\Model\Table\User02sTable Test Case
  */
 class User02sTableTest extends TestCase
 {
+    protected $connection;
+    protected $user02s;
+
     /**
-     * Fixtures
-     *
-     * @var array
+     * @return array
      */
-    public $fixtures = [
-        'plugin.Reincarnation.User02s',
-    ];
+    public function getFixtures(): array
+    {
+        return [
+            'plugin.Reincarnation.User02s',
+        ];
+    }
 
     /**
      * setUp method
@@ -30,16 +34,11 @@ class User02sTableTest extends TestCase
     {
         parent::setUp();
         $this->connection = ConnectionManager::get('test');
-        $this->User02s = new User02sTable([
+        $this->user02s = new User02sTable([
             'alias' => 'User02s',
             'table' => 'user02s',
-            'connection' => $this->connection
+            'connection' => $this->connection,
         ]);
-
-        //fixtureManagerを呼び出し、fixtureを実行する
-        $this->fixtureManager = new FixtureManager();
-        $this->fixtureManager->fixturize($this);
-        $this->fixtureManager->loadSingle('User02s');
     }
 
     /**
@@ -49,7 +48,8 @@ class User02sTableTest extends TestCase
      */
     public function tearDown(): void
     {
-        unset($this->User02s);
+        unset($this->connection);
+        unset($this->user02s);
 
         parent::tearDown();
     }
@@ -62,22 +62,22 @@ class User02sTableTest extends TestCase
     public function test_find(): void
     {
         //ID1はfind可能
-        $user_info = $this->User02s->find('all')
+        $userInfo = $this->user02s->find('all')
             ->where(['User02s.id' => 1])
             ->first();
-        $this->assertTrue(!empty($user_info));
+        $this->assertTrue(!empty($userInfo));
 
         //ID2はfind不可
-        $user_info = $this->User02s->find('all')
+        $userInfo = $this->user02s->find('all')
             ->where(['User02s.id' => 2])
             ->first();
-        $this->assertFalse(!empty($user_info));
+        $this->assertFalse(!empty($userInfo));
 
         //削除済みのデータをfindする
-        $user_info = $this->User02s->find('all',['enableSoftDelete' => false])
+        $userInfo = $this->user02s->find('all', enableSoftDelete: false)
             ->where(['User02s.id' => 2])
             ->first();
-        $this->assertTrue(!empty($user_info));
+        $this->assertTrue(!empty($userInfo));
     }
 
     /**
@@ -91,30 +91,30 @@ class User02sTableTest extends TestCase
         $data = [
             'name' => 'hoge',
         ];
-        $entity = $this->User02s->newEntity($data);
-        $save_result = $this->User02s->save($entity);
-        $this->assertTrue((bool) $save_result);
+        $entity = $this->user02s->newEntity($data);
+        $saveResult = $this->user02s->save($entity);
+        $this->assertTrue((bool)$saveResult);
 
-        $last_id = $save_result->id;
-        $user_info = $this->User02s->find('all')
-            ->where(['User02s.id' => $last_id])
+        $lastId = $saveResult->id;
+        $userInfo = $this->user02s->find('all')
+            ->where(['User02s.id' => $lastId])
             ->first();
-        $this->assertTrue(!empty($user_info));
+        $this->assertTrue(!empty($userInfo));
 
         //削除する
-        $this->assertTrue($this->User02s->softDelete($user_info));
+        $this->assertTrue($this->user02s->softDelete($userInfo));
 
         //削除したデータは見つからない
-        $user_info = $this->User02s->find('all')
-            ->where(['User02s.id' => $last_id])
+        $userInfo = $this->user02s->find('all')
+            ->where(['User02s.id' => $lastId])
             ->first();
-        $this->assertFalse(!empty($user_info));
+        $this->assertFalse(!empty($userInfo));
 
         //削除済みのデータをfindする
-        $delete_info = $this->User02s->find('all',['enableSoftDelete' => false])
-            ->where(['User02s.id' => $last_id])
+        $deleteInfo = $this->user02s->find('all', enableSoftDelete: false)
+            ->where(['User02s.id' => $lastId])
             ->first();
         //削除データが問題なく入っているかの確認
-        $this->assertTrue($delete_info->delete_flg);
+        $this->assertTrue($deleteInfo->delete_flg);
     }
 }

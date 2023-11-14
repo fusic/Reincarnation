@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ruleset name="Reincarnation">
+  <rule ref="CakePHP">
+    <exclude name="Generic.Files.LineLength.TooLong" />
+    <exclude name="PSR12.ControlStructures.ControlStructureSpacing.FirstExpressionLine" />
+  </rule>
+  <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse">
+    <exclude-pattern>tests/TestCase/Model/Table/MembersTableTest.php</exclude-pattern>
+  </rule>
+</ruleset>

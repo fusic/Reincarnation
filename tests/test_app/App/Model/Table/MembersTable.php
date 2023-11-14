@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
+
 namespace Reincarnation\Test\App\Model\Table;
 
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Reincarnation\Test\App\Model\Table\AppTable;
 
 /**
  * Members Model
@@ -14,12 +15,12 @@ use Cake\Validation\Validator;
  * @property \Cake\ORM\Association\HasMany $Tels
  * @property \Cake\ORM\Association\BelongsToMany $Hobbies
  */
-class MembersTable extends Table
+class MembersTable extends AppTable
 {
     /**
      * Initialize method
      *
-     * @param array $config The configuration for the Table.
+     * @param  array $config The configuration for the Table.
      * @return void
      */
     public function initialize(array $config): void
@@ -34,31 +35,30 @@ class MembersTable extends Table
 
         $this->belongsTo('BloodTypes', [
             'className' => 'Reincarnation\Test\App\Model\Table\BloodTypesTable',
-            'foreignKey' => 'blood_type_id'
+            'foreignKey' => 'blood_type_id',
         ]);
         $this->hasOne('Addresses', [
             'className' => 'Reincarnation\Test\App\Model\Table\AddressesTable',
-            'foreignKey' => 'member_id'
+            'foreignKey' => 'member_id',
         ]);
         $this->hasMany('Tels', [
             'className' => 'Reincarnation\Test\App\Model\Table\TelsTable',
-            'foreignKey' => 'member_id'
+            'foreignKey' => 'member_id',
         ]);
         $this->belongsToMany('Hobbies', [
             'className' => 'Reincarnation\Test\App\Model\Table\HobbiesTable',
             'foreignKey' => 'member_id',
             'targetForeignKey' => 'hobby_id',
-            'joinTable' => 'hobbies_members'
+            'joinTable' => 'hobbies_members',
         ]);
 
-        //softdelete
         $this->addBehavior('Reincarnation.SoftDelete');
     }
 
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @param  \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
@@ -74,12 +74,13 @@ class MembersTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @param  \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn(['blood_type_id'], 'BloodTypes'));
+
         return $rules;
     }
 }

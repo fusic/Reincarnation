@@ -3,3 +3,10 @@
 /phpunit.xml
 /vendor
 /tmp
+
+/config/.env
+!/config/.env.postgres.ci
+!/config/.env.mysql.ci
+
+.phpunit.cache
+.phpunit.result.cache
