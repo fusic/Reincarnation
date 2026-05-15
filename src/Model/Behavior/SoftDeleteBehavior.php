@@ -186,7 +186,7 @@ class SoftDeleteBehavior extends Behavior
 
         $targetField = $options['targetField'];
         $conditions = [
-            $sourceModel . '.' . $sourceTable->primaryKey() => $entity->{$targetField},
+            $sourceModel . '.' . $sourceTable->getPrimaryKey() => $entity->{$targetField},
         ];
 
         return (bool)count(
